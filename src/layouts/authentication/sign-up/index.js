@@ -60,7 +60,7 @@ function Cover() {
               <MDInput type="text" label="Name" variant="standard" fullWidth />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth />
+              <MDInput type="email" label="sEmail" variant="standard" fullWidth />
             </MDBox>
             <MDBox mb={2}>
               <MDInput type="password" label="Password" variant="standard" fullWidth />
@@ -93,7 +93,7 @@ function Cover() {
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
-                Already have an account?{" "}
+                Already have an sssaccount?{" "}
                 <MDTypography
                   component={Link}
                   to="/authentication/sign-in"
