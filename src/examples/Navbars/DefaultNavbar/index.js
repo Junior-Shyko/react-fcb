@@ -128,6 +128,12 @@ function DefaultNavbar({ transparent, light, action }) {
             route="/authentication/sign-in"
             light={light}
           />
+          <DefaultNavbarLink
+            icon="key"
+            name="createUser"
+            route="../../../components/FCB/User/create.js"
+            light={light}
+          />
         </MDBox>
         {action &&
           (action.type === "internal" ? (
