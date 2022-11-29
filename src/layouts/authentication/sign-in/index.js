@@ -39,12 +39,17 @@ function Basic() {
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
+  function dasbboard(e) {
+      console.log({e})
+      window.location.href="dashboard"
+  }
+
   return (
     <BasicLayout image={bgImage}>
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          bgColor="dark"
           borderRadius="lg"
           coloredShadow="info"
           mx={2}
@@ -66,7 +71,7 @@ function Basic() {
               <MDInput type="email" label="Email" fullWidth />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput type="password" label="Senha" fullWidth />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -81,7 +86,7 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton onClick={dasbboard} variant="gradient" color="dark" fullWidth>
                 Acessar
               </MDButton>
             </MDBox>
