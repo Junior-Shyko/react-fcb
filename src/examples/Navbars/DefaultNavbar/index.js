@@ -134,6 +134,12 @@ function DefaultNavbar({ transparent, light, action }) {
             route="../../../components/FCB/User/create.js"
             light={light}
           />
+          <DefaultNavbarLink
+            icon="key"
+            name="groups"
+            route="grupos"
+            light={light}
+          />
         </MDBox>
         {action &&
           (action.type === "internal" ? (
