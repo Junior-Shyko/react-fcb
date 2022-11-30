@@ -30,6 +30,7 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 // import CreateUser from "components/FCB/User/create";
+import Groups from "components/FCB/Groups";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -45,7 +46,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Grupo Convívio",
+    name: "Lista de Grupo",
     key: "tables",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tables",
@@ -58,6 +59,14 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/billing",
     component: <Billing />,
+  },
+  {
+    type: "collapse",
+    name: "Grupo de Convívio",
+    key: "billing",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/groups",
+    component: <Groups />,
   },
   // {
   //   type: "collapse",
