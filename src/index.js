@@ -16,6 +16,7 @@ Coded by www.creative-tim.com
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import { SnackbarProvider } from 'notistack';
 import App from "App";
 
 // Material Dashboard 2 React Context Provider
@@ -24,7 +25,9 @@ import { MaterialUIControllerProvider } from "context";
 ReactDOM.render(
   <BrowserRouter>
     <MaterialUIControllerProvider>
-      <App />
+      <SnackbarProvider maxSnack={3}>
+        <App />
+      </SnackbarProvider>
     </MaterialUIControllerProvider>
   </BrowserRouter>,
   document.getElementById("root")

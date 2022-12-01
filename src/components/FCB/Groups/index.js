@@ -1,3 +1,6 @@
+import React, { useState } from "react";
+import { useSnackbar } from 'notistack';
+
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Paper from '@mui/material/Paper';
@@ -5,18 +8,50 @@ import InputBase from '@mui/material/InputBase';
 import SaveIcon from '@mui/icons-material/Save';
 import Card from "@mui/material/Card";
 
-import DashboardLayout from "../../../examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "../../../examples/Navbars/DashboardNavbar";
 
 // Material Dashboard 2 React components
+import DashboardLayout from "../../../examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "../../../examples/Navbars/DashboardNavbar";
 import MDBox from "components/MDBox";
 import MDTypography from "../../MDTypography";
 import MDButton from "components/MDButton";
+//API
+import {api} from '../../../services/Api';
+
 
 function Groups() {
+  const [nameGroup, setNameGroup] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleClickVariant = (variant) => () => {
+    // variant could be success, error, warning, info, or default
+    
+  };
+
+  const postData = () =>{
+    console.log('postData')
+    let data = { name : nameGroup }
+    api.post("group" , data)
+    .then( (res) => {
+      console.log({res})
+      enqueueSnackbar('Grupo salvo com sucesso!',{ 
+        autoHideDuration: 3000,
+        variant: 'success',
+        anchorOrigin: {
+          horizontal: 'center',
+          vertical: 'bottom'
+        }
+      });
+    })
+    .catch((err) => {
+      console.log({err})
+    })
+  }
+
+  
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <DashboardNavbar />      
       <MDBox mt={8}>
         <MDBox mb={3}>
           <Grid container spacing={3}>
@@ -72,7 +107,11 @@ function Groups() {
                       <Grid xs={5} md={2} sx={{
                         m: 1
                       }}>
-                        <MDButton variant="gradient" color="info">
+                        <MDButton
+                          variant="gradient"
+                          color="info"
+                          onClick={postData}
+                        >
                           <SaveIcon />
                           Salvar
                         </MDButton>
@@ -84,7 +123,7 @@ function Groups() {
             </Grid>
           </Grid>
         </MDBox>
-      </MDBox>
+      </MDBox>      
     </DashboardLayout>
   );
 }
