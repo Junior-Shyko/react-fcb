@@ -7,6 +7,7 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import SaveIcon from '@mui/icons-material/Save';
 import Card from "@mui/material/Card";
+import CardContent from '@mui/material/CardContent';
 
 
 // Material Dashboard 2 React components
@@ -17,19 +18,30 @@ import MDTypography from "../../MDTypography";
 import MDButton from "components/MDButton";
 //API
 import {api} from '../../../services/Api';
+import List from 'components/FCB/Groups/list';
 
 
 function Groups() {
-  const [nameGroup, setNameGroup] = useState("");
-  const { enqueueSnackbar } = useSnackbar();
+  const [ nameGroup, setNameGroup] = useState("")
+  const { enqueueSnackbar } = useSnackbar()
+  const [ updateList, setUpdateList ] = useState(false)
 
-  const handleClickVariant = (variant) => () => {
-    // variant could be success, error, warning, info, or default
-    
-  };
+  function upDataList(situacion) {
+    setUpdateList(situacion);
+  }
 
   const postData = () =>{
-    console.log('postData')
+    if(nameGroup == '' || nameGroup.length < 3) {
+      enqueueSnackbar('Dicas: Digite um nome com mais de 3 letras',{ 
+        autoHideDuration: 3500,
+        variant: 'error',
+        anchorOrigin: {
+          horizontal: 'center',
+          vertical: 'bottom'
+        }
+      });
+      return false;
+    }
     let data = { name : nameGroup }
     api.post("group" , data)
     .then( (res) => {
@@ -42,13 +54,23 @@ function Groups() {
           vertical: 'bottom'
         }
       });
+      upDataList(true)
+      setNameGroup('');
+      // setTimeout(() => {
+      //   setUpdateList(false);
+      // }, 1000);
     })
     .catch((err) => {
-      console.log({err})
+      enqueueSnackbar('Error: '.err.data , { 
+        autoHideDuration: 3500,
+        variant: 'error',
+        anchorOrigin: {
+          horizontal: 'center',
+          vertical: 'bottom'
+        }
+      });
     })
-  }
-
-  
+  }  
   return (
     <DashboardLayout>
       <DashboardNavbar />      
@@ -78,6 +100,7 @@ function Groups() {
                       color="dark"
                       fontWeight="regular"
                       p={1}
+                      ml={1}
                     >
                       Qual será o nome do Grupo de Convívio?
                     </MDTypography>
@@ -94,14 +117,16 @@ function Groups() {
                       <Grid item xs={10}>
                         <InputBase
                           sx={{
-                            // ml: 1,
                             flex: 1,
                             border: '1px solid #c3c3c3',
                             p: '2px',
-                            borderRadius: '8px'
+                            borderRadius: '8px',
+                            ml: 1
                           }}
                           placeholder="Nome do grupo"
                           fullWidth
+                          value={nameGroup}
+                          onChange={(e) => setNameGroup(e.target.value)}
                         />
                       </Grid>
                       <Grid xs={5} md={2} sx={{
@@ -111,6 +136,7 @@ function Groups() {
                           variant="gradient"
                           color="info"
                           onClick={postData}
+                          sx={{width: '90%', ml: 1}}
                         >
                           <SaveIcon />
                           Salvar
@@ -122,6 +148,7 @@ function Groups() {
               </Card>
             </Grid>
           </Grid>
+          <List upList={upDataList} situacionList={updateList} />
         </MDBox>
       </MDBox>      
     </DashboardLayout>
