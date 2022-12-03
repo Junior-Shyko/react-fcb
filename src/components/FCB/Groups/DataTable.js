@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import {api} from '../../../services/Api';
 import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+// import Link from '@mui/material/Link';
+import { Link } from "react-router-dom";
 //data-grid
-import { DataGrid, GridToolbarContainer} from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridRenderEditCellParams} from '@mui/x-data-grid';
 
-
-const CustomToolbar = () => {
-  
-  const handleGoToPage1 = () => console.log('clicou');
-
+const CustomToolbar = (props) => {
+  console.log({props})
+  // const handleGoToPage1 = () => console.log({props});
+  let redirect = "/details-groups/"+props.id;
   return (
     <GridToolbarContainer>
-      <Button onClick={handleGoToPage1}><AddCircleIcon /></Button>
+      <Link to={redirect} relative="path">
+        <Button><AddCircleIcon /></Button>
+      </Link>
     </GridToolbarContainer>
   );
 };
@@ -20,16 +23,15 @@ const CustomToolbar = () => {
 
 var columns = [
   {
-    field: 'name',
-    headerName: 'Nome do Grupo',
-    editable: false,
-    width: 150 
+      field: 'name',
+      headerName: 'Nome do Grupo',
+      editable: false,
+      minWidth: 250 
   },
   {
       field: 'created_at',
       headerName: 'Criado',
-      editable: false,
-      width: 150 
+      editable: false
   },
   {
       field: 'datails',
@@ -38,7 +40,7 @@ var columns = [
       sortable: false,
       width: 100,
       renderCell: CustomToolbar,
-    },
+  },
 ];
 
 const DataTable = (props) => {
@@ -48,7 +50,8 @@ return (
     <DataGrid
       rows={props.tables}
       columns={columns}
-      pageSize={12}
+      pageSize={5}
+      rowHeight={38}
     />
   </div>
 )
