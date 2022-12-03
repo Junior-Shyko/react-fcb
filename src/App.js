@@ -30,6 +30,7 @@ import createCache from "@emotion/cache";
 
 // Material Dashboard 2 React routes
 import routes from "routes";
+import DetailsGroups  from "./components/FCB/Groups/details";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
@@ -145,8 +146,8 @@ export default function App() {
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
             />
-            <Configurator />
-            {configsButton}
+            {/* <Configurator />
+            {configsButton} */}
           </>
         )}
         {layout === "vr" && <Configurator />}
@@ -169,14 +170,15 @@ export default function App() {
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
-          <Configurator />
-          {configsButton}
+          {/* <Configurator /> */}
+          {/* {configsButton} */}
         </>
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/dashboard" />} />
+        <Route exact path="details-groups/:id" element={<DetailsGroups />} />
       </Routes>
     </ThemeProvider>
   );
