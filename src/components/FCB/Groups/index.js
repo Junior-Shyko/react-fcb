@@ -1,22 +1,79 @@
+import React, { useState } from "react";
+import { useSnackbar } from 'notistack';
+
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import SaveIcon from '@mui/icons-material/Save';
 import Card from "@mui/material/Card";
+import CardContent from '@mui/material/CardContent';
 
-import DashboardLayout from "../../../examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "../../../examples/Navbars/DashboardNavbar";
 
 // Material Dashboard 2 React components
+import DashboardLayout from "../../../examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "../../../examples/Navbars/DashboardNavbar";
 import MDBox from "components/MDBox";
 import MDTypography from "../../MDTypography";
 import MDButton from "components/MDButton";
+//API
+import {api} from '../../../services/Api';
+import List from 'components/FCB/Groups/list';
+
 
 function Groups() {
+  const [ nameGroup, setNameGroup] = useState("")
+  const { enqueueSnackbar } = useSnackbar()
+  const [ updateList, setUpdateList ] = useState(false)
+
+  function upDataList(situacion) {
+    setUpdateList(situacion);
+  }
+
+  const postData = () =>{
+    if(nameGroup == '' || nameGroup.length < 3) {
+      enqueueSnackbar('Dicas: Digite um nome com mais de 3 letras',{ 
+        autoHideDuration: 3500,
+        variant: 'error',
+        anchorOrigin: {
+          horizontal: 'center',
+          vertical: 'bottom'
+        }
+      });
+      return false;
+    }
+    let data = { name : nameGroup }
+    api.post("group" , data)
+    .then( (res) => {
+      console.log({res})
+      enqueueSnackbar('Grupo salvo com sucesso!',{ 
+        autoHideDuration: 3000,
+        variant: 'success',
+        anchorOrigin: {
+          horizontal: 'center',
+          vertical: 'bottom'
+        }
+      });
+      upDataList(true)
+      setNameGroup('');
+      // setTimeout(() => {
+      //   setUpdateList(false);
+      // }, 1000);
+    })
+    .catch((err) => {
+      enqueueSnackbar('Error: '.err.data , { 
+        autoHideDuration: 3500,
+        variant: 'error',
+        anchorOrigin: {
+          horizontal: 'center',
+          vertical: 'bottom'
+        }
+      });
+    })
+  }  
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <DashboardNavbar />      
       <MDBox mt={8}>
         <MDBox mb={3}>
           <Grid container spacing={3}>
@@ -43,6 +100,7 @@ function Groups() {
                       color="dark"
                       fontWeight="regular"
                       p={1}
+                      ml={1}
                     >
                       Qual será o nome do Grupo de Convívio?
                     </MDTypography>
@@ -59,20 +117,27 @@ function Groups() {
                       <Grid item xs={10}>
                         <InputBase
                           sx={{
-                            // ml: 1,
                             flex: 1,
                             border: '1px solid #c3c3c3',
                             p: '2px',
-                            borderRadius: '8px'
+                            borderRadius: '8px',
+                            ml: 1
                           }}
                           placeholder="Nome do grupo"
                           fullWidth
+                          value={nameGroup}
+                          onChange={(e) => setNameGroup(e.target.value)}
                         />
                       </Grid>
                       <Grid xs={5} md={2} sx={{
                         m: 1
                       }}>
-                        <MDButton variant="gradient" color="info">
+                        <MDButton
+                          variant="gradient"
+                          color="info"
+                          onClick={postData}
+                          sx={{width: '90%', ml: 1}}
+                        >
                           <SaveIcon />
                           Salvar
                         </MDButton>
@@ -83,8 +148,9 @@ function Groups() {
               </Card>
             </Grid>
           </Grid>
+          <List upList={upDataList} situacionList={updateList} />
         </MDBox>
-      </MDBox>
+      </MDBox>      
     </DashboardLayout>
   );
 }
