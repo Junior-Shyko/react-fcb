@@ -7,7 +7,6 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import SaveIcon from '@mui/icons-material/Save';
 import Card from "@mui/material/Card";
-import CardContent from '@mui/material/CardContent';
 
 
 // Material Dashboard 2 React components
