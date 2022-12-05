@@ -14,7 +14,7 @@ const CustomToolbar = (props) => {
   return (
     <GridToolbarContainer>
       <Link to={redirect} relative="path">
-        <Button><AddCircleIcon /></Button>
+        <Button><AddCircleIcon /> </Button>
       </Link>
     </GridToolbarContainer>
   );

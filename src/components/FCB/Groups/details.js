@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSnackbar } from 'notistack';
+import { Link } from "react-router-dom";
+import { DataGrid } from '@mui/x-data-grid';
 import { api } from '../../../services/Api';
-import SelectMember from "./selectMember"
+import SelectMember from "./selectMember";
+import DataTableUser from "./dataUser";
 
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
-
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 // Material Dashboard 2 React components
 import DashboardLayout from "../../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../../examples/Navbars/DashboardNavbar";
@@ -17,11 +20,25 @@ import MDBox from "components/MDBox";
 import MDTypography from "../../MDTypography";
 import MDButton from "components/MDButton";
 
+
 import { useParams } from "react-router-dom";
 
-const Details = () => {
+const CustomToolbar = () => {
+  // const handleGoToPage1 = () => console.log({props});
+  let redirect = "/details-groups/";
+  return (
+      <Link to={redirect} relative="path">
+        <MDButton><AddCircleIcon /> </MDButton>
+      </Link>
+  );
+};
+
+export default function Details(){
   let { id } = useParams();
+  
   const [nameGroup, setNameGroup] = useState();
+  const [rowsMember, setRowsMember] = useState();
+  const [routeBack, setRouteBack] = useState('groups');
   const { enqueueSnackbar } = useSnackbar()
  
   const onChangeNameGroup = (event) => {
@@ -29,6 +46,7 @@ const Details = () => {
   }
 
   const getNameGroup = () => {
+    console.log({routeBack})
     api.get("group/" + id)
       .then((res) => {
         console.log({ res })
@@ -39,15 +57,26 @@ const Details = () => {
       })
   }
 
+  const getMembersGroups = () => {
+    api.get('user-group')
+    .then((res) => {
+      console.log('getMembersGroups ', res.data)
+      setRowsMember(res.data)
+    })
+    .catch((err) => {
+      console.log({ err })
+    })
+  }
+
   useEffect(() => {
     getNameGroup()
+    getMembersGroups()
   }, [])
 
   const alterNameGroup = (nameGroup) => {
     let dataUp = { name: nameGroup }
     api.post("group/" + id, dataUp)
       .then((res) => {
-        console.log({ res })
         enqueueSnackbar(res.data.message,{ 
           autoHideDuration: 2000,
           variant: res.data.type,
@@ -66,12 +95,22 @@ const Details = () => {
     console.log(event.target.value);
   };
 
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox>
+        <Grid item xs={12} md={12} lg={12}>
+          <MDButton
+            size="medium"
+            variant="text"
+            color="dark"
+            href="/groups"
+          >
+            <KeyboardReturnIcon /> Voltar
+          </MDButton>
+        </Grid>
         <Grid container spacing={3}>
+          
           <Grid item xs={12} md={12} lg={12}>
             <Card>
               <CardContent>
@@ -160,6 +199,9 @@ const Details = () => {
                     Liders do grupo
                   </MDTypography>
                 </MDBox>
+                <MDBox display="flex" alignItems="center" lineHeight={0}>
+                  <DataTableUser tables={rowsMember}/>
+                </MDBox>
               </CardContent>
             </Card>
           </Grid>
@@ -169,5 +211,3 @@ const Details = () => {
 
   )
 }
-
-export default Details;
