@@ -37,7 +37,7 @@ export default function Details(){
   let { id } = useParams();
   
   const [nameGroup, setNameGroup] = useState();
-  const [rowsMember, setRowsMember] = useState();
+
   const [routeBack, setRouteBack] = useState('groups');
   const { enqueueSnackbar } = useSnackbar()
  
@@ -57,20 +57,10 @@ export default function Details(){
       })
   }
 
-  const getMembersGroups = () => {
-    api.get('user-group')
-    .then((res) => {
-      console.log('getMembersGroups ', res.data)
-      setRowsMember(res.data)
-    })
-    .catch((err) => {
-      console.log({ err })
-    })
-  }
+
 
   useEffect(() => {
     getNameGroup()
-    getMembersGroups()
   }, [])
 
   const alterNameGroup = (nameGroup) => {
@@ -200,7 +190,7 @@ export default function Details(){
                   </MDTypography>
                 </MDBox>
                 <MDBox display="flex" alignItems="center" lineHeight={0}>
-                  <DataTableUser tables={rowsMember}/>
+                  <DataTableUser />
                 </MDBox>
               </CardContent>
             </Card>
