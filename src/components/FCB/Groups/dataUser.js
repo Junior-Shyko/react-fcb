@@ -40,7 +40,7 @@ function DataTableUse(props) {
           color="error"
           size="large"
           onClick={() => {
-  
+              console.log('clicou')
           }}
         >
           <DeleteIcon />
@@ -79,19 +79,21 @@ function DataTableUse(props) {
   ];
 
   const getMembersGroups = () => {
+    // console.log({props})
     api.get('user-group')
     .then((res) => {
-      console.log('getMembersGroups ', res.data)
+      // console.log('getMembersGroups ', res.data)
       setRowsMember(res.data)
     })
     .catch((err) => {
       console.log({ err })
     })
   }
-  console.log({rowsMember})
+  // console.log({rowsMember})
   useEffect(() => {
     getMembersGroups()
   }, [])
+
   return (
     <Box sx={{ height: 400, width: '100%' }}>
       <DataGrid

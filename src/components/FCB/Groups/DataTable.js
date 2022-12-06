@@ -31,7 +31,8 @@ var columns = [
   {
       field: 'created_at',
       headerName: 'Criado',
-      editable: false
+      editable: false,
+      minWidth: 150
   },
   {
       field: 'datails',

@@ -7,29 +7,54 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
-const SelectMember = () => {
-
+const SelectMember = (props) => {
+  console.log({props})
   const [leader, setLeader] = useState();
+  const [nameVinc, setNameVinc] = useState();
 
   const selectChange = (event) => {
-    setLeader(event.target.value);
+    setNameVinc(event.target.value);
   }
+
+  const listMember = () => {
+    api.get('list-member/'+props.type)
+    .then((res) => {
+      console.log({res})
+      setLeader(res.data)
+    })
+    .catch((err) => {
+      console.log({err})
+    })
+  }
+
+  useEffect(() => {
+    listMember()
+  }, []);
+
   return (
-    <FormControl fullWidth sx={{ mt: 1 }}>
-      <InputLabel>Selecione</InputLabel>
-      <Select
-        label="Selecione um membro"
-        value={leader}
-        onChange={selectChange}
-        sx={{
-          minHeight: '40px'
-        }}
-      >
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
-      </Select>
-    </FormControl>
+    <>
+      <FormControl fullWidth sx={{ mt: 1 }}>
+        <InputLabel>Selecione um membro</InputLabel>
+        <Select
+          label="Selecione um membro"
+          value={nameVinc}
+          onChange={selectChange}
+          sx={{
+            minHeight: '40px'
+          }}
+        >
+        {
+          leader.map(element => {
+            return (
+              <MenuItem key={element.id} value={element.id}>
+                {element.name}
+              </MenuItem>
+            )
+          })
+        }
+        </Select>
+      </FormControl>
+    </>
   )
 
 }

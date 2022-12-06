@@ -10,7 +10,8 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import TextField from '@mui/material/TextField';
+// import TextField from '@mui/material/TextField';
+import MDInput from "components/MDInput";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 // Material Dashboard 2 React components
@@ -56,9 +57,6 @@ export default function Details(){
         console.log({ err })
       })
   }
-
-
-
   useEffect(() => {
     getNameGroup()
   }, [])
@@ -108,11 +106,13 @@ export default function Details(){
                   Nome do grupo
                 </MDTypography>
                 <MDBox display="flex" alignItems="center" lineHeight={0}>
-                  <TextField
-                    id="name-group"
+                  <MDInput
+                    type="text"
                     label="Nome"
                     fullWidth
                     value={nameGroup}
+                    InputLabelProps={{ shrink: true }}
+                    // defaultValue={nameGroup}
                     onChange={(e) => onChangeNameGroup(e.target.value)}
                     onBlur={(e) => alterNameGroup(e.target.value)}
                   />
@@ -131,7 +131,7 @@ export default function Details(){
                 <MDBox display="flex" alignItems="center" sx={{
                   minHeight: '40px'
                 }}>
-                  <SelectMember />
+                  <SelectMember type="Líder" />
                 </MDBox>
               </CardContent>
               <CardActions sx={{ background: '#ebecedb5', borderTop: '1px solid #e1dede' }}>
@@ -156,7 +156,7 @@ export default function Details(){
                   minHeight: '40px'
                 }}
                 >
-                  <SelectMember />
+                  <SelectMember type="Treinamento" />
                 </MDBox>
               </CardContent>
               <CardActions sx={{ background: '#ebecedb5', borderTop: '1px solid #e1dede' }}>
