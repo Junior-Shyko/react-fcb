@@ -131,17 +131,10 @@ export default function Details(){
                 <MDBox display="flex" alignItems="center" sx={{
                   minHeight: '40px'
                 }}>
-                  <SelectMember type="Líder" />
+                  <SelectMember type="Lider" idGroup={id} />
                 </MDBox>
               </CardContent>
-              <CardActions sx={{ background: '#ebecedb5', borderTop: '1px solid #e1dede' }}>
-                <MDButton
-                  size="medium"
-                  variant="contained"
-                  color="success"
-                >Confirmar
-                </MDButton>
-              </CardActions>
+              
             </Card>
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
@@ -156,7 +149,7 @@ export default function Details(){
                   minHeight: '40px'
                 }}
                 >
-                  <SelectMember type="Treinamento" />
+                  <SelectMember type="Treinamento" idGroup={id}/>
                 </MDBox>
               </CardContent>
               <CardActions sx={{ background: '#ebecedb5', borderTop: '1px solid #e1dede' }}>
@@ -170,7 +163,7 @@ export default function Details(){
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={6} lg={6}>
+          <Grid item xs={12} md={12} lg={12}>
             <Card>
               <CardContent>
                 <MDBox display="flex" alignItems="center" lineHeight={0}>
