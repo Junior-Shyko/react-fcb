@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {api} from '../../../services/Api';
 import DataTableUser from 'components/FCB/Groups/dataUser';
+import DataTableUsers from 'components/FCB/Groups/DataTableUsers';
 
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -29,7 +30,8 @@ const StatusVinculo = () => {
 
 
 function DataTableUse(props) {
-  const [rowsMember, setRowsMember] = useState();
+  // console.log({props})
+  const [tableData, setTableData] = useState([])
   
   const RemoveMember = () => {
   
@@ -78,30 +80,26 @@ function DataTableUse(props) {
       nameGroup: 'GC da Serrinha',nameLink: "Líder", nameUser: "Junior Oliveira" , user_id: 1 }
   ];
 
-  const getMembersGroups = () => {
-    // console.log({props})
-    api.get('user-group')
-    .then((res) => {
-      // console.log('getMembersGroups ', res.data)
-      setRowsMember(res.data)
-    })
-    .catch((err) => {
-      console.log({ err })
-    })
+  const getUsersGroups = async () => {
+      api.get("user-group/"+props.idGroup)
+      .then( (res) => {            
+        setTableData(res.data)
+      })
+      .catch( (err) => {
+        console.log({err})
+      })
   }
-  // console.log({rowsMember})
+  
   useEffect(() => {
-    getMembersGroups()
+    getUsersGroups();
   }, [])
+  
 
   return (
     <Box sx={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowHeight={38}
-      />
+      <DataTableUsers
+        // listUp={props.situacionList}
+        tables={tableData}/>
     </Box>
   );
 }

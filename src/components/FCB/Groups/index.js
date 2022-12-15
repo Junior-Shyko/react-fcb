@@ -44,7 +44,7 @@ function Groups() {
     let data = { name : nameGroup }
     api.post("group" , data)
     .then( (res) => {
-      console.log({res})
+      // console.log({res})
       enqueueSnackbar('Grupo salvo com sucesso!',{ 
         autoHideDuration: 3000,
         variant: 'success',

@@ -41,7 +41,8 @@ export default function Details(){
 
   const [routeBack, setRouteBack] = useState('groups');
   const { enqueueSnackbar } = useSnackbar()
- 
+  const [rowsMember, setRowsMember] = useState();
+
   const onChangeNameGroup = (event) => {
     setNameGroup(event)
   }
@@ -50,7 +51,7 @@ export default function Details(){
     console.log({routeBack})
     api.get("group/" + id)
       .then((res) => {
-        console.log({ res })
+        // console.log({ res })
         setNameGroup(res.data.name)
       })
       .catch((err) => {
@@ -79,9 +80,21 @@ export default function Details(){
       })
   };
 
-  const handleChange = (event) => {
-    console.log(event.target.value);
-  };
+  const getMembersGroups = () => {
+    // console.log({props})
+    api.get('user-group')
+    .then((res) => {
+      // console.log('getMembersGroups ', res.data)
+      setRowsMember(res.data)
+    })
+    .catch((err) => {
+      console.log({ err })
+    })
+  }
+  // console.log({rowsMember})
+  useEffect(() => {
+    getMembersGroups()
+  }, [])
 
   return (
     <DashboardLayout>
@@ -183,7 +196,7 @@ export default function Details(){
                   </MDTypography>
                 </MDBox>
                 <MDBox display="flex" alignItems="center" lineHeight={0}>
-                  <DataTableUser />
+                  <DataTableUser upList={rowsMember} idGroup={id}/>
                 </MDBox>
               </CardContent>
             </Card>

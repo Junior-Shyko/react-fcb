@@ -49,7 +49,9 @@ function List(props) {
                     </MDBox>
                     <MDBox>
                     <Grid item xs={12}>
-                        <DataTable listUp={props.situacionList} tables={tableData}/>
+                        <DataTable 
+                            listUp={props.situacionList}
+                            tables={tableData}/>
                     </Grid>
                     </MDBox>
                 </CardContent>
