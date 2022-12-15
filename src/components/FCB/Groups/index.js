@@ -137,8 +137,8 @@ function Groups() {
                           onClick={postData}
                           sx={{width: '90%', ml: 1}}
                         >
-                          <SaveIcon />
-                          Salvar
+                          <SaveIcon  sx={{mr: 1}}/>
+                           Salvar
                         </MDButton>
                       </Grid>
                     </Paper>

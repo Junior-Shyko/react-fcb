@@ -1,21 +1,35 @@
 import React, { useEffect, useState } from "react";
-import {api} from '../../../services/Api';
-import Button from '@mui/material/Button';
+import DeleteGroup from './modal/DeleteGroup';
+import MDButton from "components/MDButton";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Grid from "@mui/material/Grid";
 // import Link from '@mui/material/Link';
 import { Link } from "react-router-dom";
 //data-grid
-import { DataGrid, GridToolbarContainer, GridRenderEditCellParams} from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer} from '@mui/x-data-grid';
 
 const CustomToolbar = (props) => {
-  console.log({props})
-  // const handleGoToPage1 = () => console.log({props});
   let redirect = "/details-groups/"+props.id;
+  let groud_id = props.id;
   return (
     <GridToolbarContainer>
-      <Link to={redirect} relative="path">
-        <Button><AddCircleIcon /> </Button>
-      </Link>
+      <Grid container spacing={0}>
+        <Grid item xs={6}>
+          <Link to={redirect} relative="path">
+            <MDButton
+              variant="text"
+              color="info"
+              size="large"
+              title="Mais detalhes do grupo"
+            >
+              <AddCircleIcon />
+            </MDButton>
+          </Link>
+        </Grid>
+        <Grid item xs={6}>
+          <DeleteGroup open={true} idGroup={groud_id}/>
+        </Grid>
+      </Grid>
     </GridToolbarContainer>
   );
 };
@@ -39,7 +53,7 @@ var columns = [
       headerName: 'Detalhes',
       description: 'Click para saber mais informações desse grupo',
       sortable: false,
-      width: 100,
+      width: 120,
       renderCell: CustomToolbar,
   },
 ];

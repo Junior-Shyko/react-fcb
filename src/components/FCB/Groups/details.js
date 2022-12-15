@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSnackbar } from 'notistack';
 import { Link } from "react-router-dom";
-import { DataGrid } from '@mui/x-data-grid';
 import { api } from '../../../services/Api';
 import SelectMember from "./selectMember";
 import DataTableUser from "./dataUser";
