@@ -15,7 +15,7 @@ import MDButton from "components/MDButton";
 import MDBox from "components/MDBox";
 
 const SelectMember = (props) => {
-  console.log({ props })
+
   const [leader, setLeader] = useState()
   const [nameVinc, setNameVinc] = useState()
   const { enqueueSnackbar } = useSnackbar()
@@ -39,7 +39,18 @@ const SelectMember = (props) => {
   }, []);
 
   const saveMemberGroup = () => {
+
     let dataMember = {user_id: nameVinc, group_id: props.idGroup}
+    if(nameVinc === undefined) {
+      enqueueSnackbar('Selecione o nome do membro',{ 
+        autoHideDuration: 2000,
+        variant: 'error',
+        anchorOrigin: {
+          horizontal: 'center',
+          vertical: 'bottom'
+        }
+      });
+    }
     api.post('user-group', dataMember)
     .then((res) => {
       console.log({res})

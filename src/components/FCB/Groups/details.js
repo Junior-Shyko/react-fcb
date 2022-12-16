@@ -164,14 +164,6 @@ export default function Details(){
                   <SelectMember type="Treinamento" idGroup={id}/>
                 </MDBox>
               </CardContent>
-              <CardActions sx={{ background: '#ebecedb5', borderTop: '1px solid #e1dede' }}>
-                <MDButton
-                  size="medium"
-                  variant="contained"
-                  color="success"
-                >Confirmar
-                </MDButton>
-              </CardActions>
             </Card>
           </Grid>
 
