@@ -1,35 +1,34 @@
-import React, { useEffect, useState } from "react";
-import {api} from '../../../services/Api';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import SimpleDialog from './SimpleDialog';
+import React from "react";
 
+import ModalDeleteUserGroup from './modal/ModalDeleteUserGroup';
+import MDBadge from "components/MDBadge";
 
 // import Link from '@mui/material/Link';
 import { Link } from "react-router-dom";
 //data-grid
 import { DataGrid, GridToolbarContainer, GridRenderEditCellParams} from '@mui/x-data-grid';
 
-const StatusVinculo = () => {
+const StatusVinculo = (props) => {
   
-  // return (
-  //   <MDBadge badgeContent={rows.vinculo} 
-  //       color="success" variant="gradient" size="sm" />
-  // )
+  return (
+    <MDBadge 
+      badgeContent={props.row.nameLink} color="success"
+      variant="gradient" size="sm"
+    />
+  )
 };
 
 const RemoveMember = (props) => {
-  console.log({props})
   return (
     <GridToolbarContainer>      
-      <SimpleDialog open={true} id={props.id} name={props.row.nameUser}/>
+      <ModalDeleteUserGroup
+        open={true}
+        id={props.id}
+        name={props.row.nameUser}
+      />
     </GridToolbarContainer>
   );
 };
-
 
 var columns = [
   {
