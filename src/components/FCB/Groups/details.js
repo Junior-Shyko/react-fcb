@@ -154,14 +154,14 @@ export default function Details(){
               <CardContent>
                 <MDBox display="flex" alignItems="center" lineHeight={0}>
                   <MDTypography variant="button" fontWeight="regular" color="text">
-                    Nome(s) para lider em treinamento
+                    Nome do líder em treinamento do grupo
                   </MDTypography>
                 </MDBox>
                 <MDBox display="flex" alignItems="center" sx={{
                   minHeight: '40px'
                 }}
                 >
-                  <SelectMember type="Treinamento" idGroup={id}/>
+                  <SelectMember type="lider em treinamento" idGroup={id}/>
                 </MDBox>
               </CardContent>
             </Card>
