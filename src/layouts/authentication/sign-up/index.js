@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { useForm } from "react-hook-form";
 // react-router-dom components
 import { Link } from "react-router-dom"
 import { api } from "./../../../services/Api"
@@ -34,7 +35,16 @@ import PageLayout from "../../../examples/LayoutContainers/PageLayout";
 
 function Cover() {
   const [nameGroup, setNameGroup] = useState([])
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
+  const onSubmit = (data, e) => {
+    e.preventDefault();
+    
+    console.log(data, e)
+  };
+  const onError = (errors, e) => console.log(errors, e);
+
+  console.log({errors})
   const getGroups = () => {
     api.get('group')
       .then((res) => {
@@ -52,16 +62,9 @@ function Cover() {
   const [group, setGroup] = useState('')
   const [name, setName] = useState('')
   const [cep, setCep] = useState('')
-  const [address, setAddress] = useState('')
-  const [number, setNumber] = useState('')
-  const [district, setDistrict] = useState('')
-  const [city, setCity] = useState('')
   const [uf, setUf] = useState('')
   const [phone, setPhone] = useState('')
-  const [baptized, setBaptized] = useState('')
-  const [situacion, setSituacion] = useState('')
-  const [email, setEmail] = useState('')
-  const [passwword, setPassword] = useState('')
+
 
   const handleInput = (e) => {
     console.log({ e })
@@ -93,6 +96,7 @@ function Cover() {
       <Box sx={{ flexGrow: 1, margin: 5 }}>
         <Grid container spacing={2} >
           <Grid item md={12} xs={12} lg={12}>
+            <form id="hook-form" onSubmit={handleSubmit(onSubmit)}>
             <Item>
               <Card fullWidth>
                 <MDBox
@@ -173,7 +177,10 @@ function Cover() {
                         variant="standard"
                         fullWidth
                         size="small"
-                        onChange={(e)=>inputChangeHandler(setAddress, e)}
+                        name="name"
+                        {...register("name" , 
+                          {required: true, minLength: 3})
+                        }
                       />
                     </MDBox>
                     <MDBox>
@@ -183,6 +190,8 @@ function Cover() {
                         variant="standard"
                         fullWidth
                         size="small"
+                        name="number"
+                        {...register("number")}
                       />
                     </MDBox>
                     <MDBox>
@@ -192,6 +201,8 @@ function Cover() {
                         variant="standard"
                         fullWidth
                         size="small"
+                        name="district"
+                        {...register("district")}
                       />
                     </MDBox>
                     <MDBox>
@@ -310,8 +321,22 @@ function Cover() {
                     <MDBox>
                       <MDInput type="password" label="Senha" variant="standard" fullWidth />
                     </MDBox>
-                    <MDBox mt={4} mb={1}>
-                      <MDButton variant="contained" color="dark" fullWidth>
+                    
+                    
+                  </MDBox>
+                </MDBox>
+              </Card>
+            </Item>
+            </form>
+            <Card>
+            <MDBox mt={4} mb={1}>
+                      <MDButton
+                        variant="contained"
+                        color="dark"
+                        fullWidth
+                        type="submit"
+                        form="hook-form"
+                      >
                         Cadastrar
                         <SaveIcon />
                       </MDButton>
@@ -331,10 +356,7 @@ function Cover() {
                         </MDTypography>
                       </MDTypography>
                     </MDBox>
-                  </MDBox>
-                </MDBox>
-              </Card>
-            </Item>
+                    </Card>
           </Grid>
         </Grid>
       </Box>
