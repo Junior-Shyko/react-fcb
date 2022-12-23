@@ -15,13 +15,10 @@ Coded by www.creative-tim.com
 
 import { useState } from "react";
 
-// react-router-dom components
-import { Link } from "react-router-dom";
-
 // @mui material components
-import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
-
+import Grid from "@mui/material/Grid"
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -29,86 +26,89 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 
 // Authentication layout components
-import BasicLayout from "layouts/authentication/components/BasicLayout";
-
-// Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import PageLayout from "../../../examples/LayoutContainers/PageLayout";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
-
-  function dasbboard(e) {
-      console.log({e})
-      window.location.href="dashboard"
-  }
-
   return (
-    <BasicLayout image={bgImage}>
-      <Card>
-        <MDBox
-          variant="gradient"
-          bgColor="dark"
-          borderRadius="lg"
-          coloredShadow="info"
-          mx={2}
-          mt={-3}
-          p={2}
-          mb={1}
-          textAlign="center"
+    <PageLayout>
+      <MDBox  sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        m: 1,        
+      }}>
+      <Grid container spacing={2}>
+        <Grid
+          item
+          md={7}
+          sx={{
+            display: { xs: "none",  md: "block" }
+          }}
         >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Login Família
-          </MDTypography>
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Campo de Boaz
-          </MDTypography>
-        </MDBox>
-        <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
-            <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
-            </MDBox>
-            <MDBox mb={2}>
-              <MDInput type="password" label="Senha" fullWidth />
-            </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Lembre-me
-              </MDTypography>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton onClick={dasbboard} variant="gradient" color="dark" fullWidth>
-                Acessar
-              </MDButton>
-            </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
+          <Paper >
+            <img src="https://i.imgur.com/XyBYj1J.jpg" sx={{width: '100%'}}/>
+          </Paper >
+        </Grid>
+        <Grid item xs={12} sm={12} md={5}>
+          <Paper sx={{height: '100%'}} >
+            <Container fixed>
+            <MDBox pt={4} pb={3} px={3}>
+                <MDBox display="flex" alignItems="center"  textAlign="center" mt={5}>
+                  <Grid sx={12} md={12}>
+                    <MDTypography
+                      fontWeight="bold"
+                      color="dark"
+                      textGradient
+                      variant="h2"
+                    >Acessar</MDTypography>
+                  </Grid>                                    
+                </MDBox>
+                <MDBox display="flex" alignItems="center"  textAlign="center" mt={5} mb={5}>
+                  <Grid sx={12} md={12}>
+                    <MDTypography
+                      fontWeight="light"
+                      color="text"
+                      textGradient
+                    >
+                      Uma aplicação para a liderança da Igreja <span> <strong>Família Campo de Boaz</strong> </span>
+                    </MDTypography>
+                  </Grid>                                    
+                </MDBox>
+                <MDBox component="form" role="form" m={7}>
+                  <MDBox mb={2}>
+                    <MDInput type="email" label="Email" fullWidth />
+                  </MDBox>
+                  <MDBox mb={2}>
+                    <MDInput type="password" label="Password" fullWidth />
+                  </MDBox>
+                  <MDBox mt={4} mb={1}>
+                    <MDButton variant="gradient" color="info" fullWidth>
+                      Fazer login
+                    </MDButton>
+                  </MDBox>
+                </MDBox>
+              </MDBox>
+
+              <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
-                Não possue uma conta?{" "}
+                Ainda não possue cadastro?{" "}
                 <MDTypography
-                  component={Link}
-                  to="/authentication/sign-up"
-                  variant="button"
+                 variant="button"
                   color="info"
                   fontWeight="medium"
                   textGradient
                 >
-                  Criar
+                 Fazer cadastro
                 </MDTypography>
               </MDTypography>
             </MDBox>
-          </MDBox>
-        </MDBox>
-      </Card>
-    </BasicLayout>
+            </Container>            
+          </Paper >
+        </Grid>
+      </Grid>
+      </MDBox>
+    </PageLayout>
   );
 }
 
