@@ -6,10 +6,9 @@ import { api } from "./../../../services/Api"
 
 // @mui material components
 import Card from "@mui/material/Card"
-// import Checkbox from "@mui/material/Checkbox"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import FormControl from "@mui/material/FormControl"
-import Select from "@mui/material/Select"
+import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import SaveIcon from "@mui/icons-material/Save"
 import Radio from "@mui/material/Radio"
@@ -22,29 +21,31 @@ import FormHelperText from '@mui/material/FormHelperText'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
+import Alert from '@mui/material/Alert';
 
 //Mascara para inputs
 import PhoneCuston from "../../general/PhoneCuston"
 import CepCuston from "../../general/CepCuston"
+import BirthDate from "../../general/BirthDate"
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox"
 import MDTypography from "components/MDTypography"
 import MDInput from "components/MDInput"
 import MDButton from "components/MDButton"
 import PageLayout from "../../../examples/LayoutContainers/PageLayout";
+//STYLE
+import '../../style/all.css'
 
 function Cover() {
   const [nameGroup, setNameGroup] = useState([])
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm()
 
   const onSubmit = (data, e) => {
-    e.preventDefault();
-    
+    //Request dos campos
     console.log(data, e)
   };
-  const onError = (errors, e) => console.log(errors, e);
 
-  console.log({errors})
+  
   const getGroups = () => {
     api.get('group')
       .then((res) => {
@@ -59,25 +60,33 @@ function Cover() {
     getGroups()
   }, [])
 
+  //PARA O USO DO SELECT
   const [group, setGroup] = useState('')
-  const [name, setName] = useState('')
-  const [cep, setCep] = useState('')
-  const [uf, setUf] = useState('')
+  const [uf, setUf] = useState([])
   const [phone, setPhone] = useState('')
+  const [birthdate, setBirthDate] = useState('')
+  const [cep, setCep] = useState('')
 
-
-  const handleInput = (e) => {
+  const handleInputPhone = (e) => {
     console.log({ e })
     setPhone(e.target.value)
   }
+  const handleInputBirth = (e) => {
+    console.log({ e })
+    setBirthDate(e.target.value)
+  }
 
-  const completCep = (e) => {
+  const handleInputCep = (e) => {
     console.log({ e })
     setCep(e.target.value)
   }
 
   const handleChange = (event) => {
     setGroup(event.target.value);
+  };
+
+  const handleChangeUf = (event: SelectChangeEvent) => {
+    setUf(event.target.value);
   };
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -87,16 +96,12 @@ function Cover() {
     color: theme.palette.text.secondary,
   }));
 
-  const inputChangeHandler = (setFunction: React.Dispatch<React.SetStateAction<string>>, event: React.ChangeEvent<HTMLInputElement>) => {
-    setFunction(event.target.value)
-  }
-
   return (
     <PageLayout>
       <Box sx={{ flexGrow: 1, margin: 5 }}>
         <Grid container spacing={2} >
           <Grid item md={12} xs={12} lg={12}>
-            <form id="hook-form" onSubmit={handleSubmit(onSubmit)}>
+            <form id="form-hook-form" onSubmit={handleSubmit(onSubmit)}>
             <Item>
               <Card fullWidth>
                 <MDBox
@@ -119,10 +124,16 @@ function Cover() {
                   </MDTypography>
                 </MDBox>
                 <MDBox px={3}>
+                <Alert severity="info">
+                  <FormHelperText sx={{fontWeight: 500}}>Os campos com * são obrigatórios.</FormHelperText>
+                </Alert>
+                </MDBox>
+                <MDBox px={3}>
                   <MDBox component="form" role="form">
                     <Grid item xs={12} md={12} lg={12} mt={2}>
-                      <InputLabel>Selecione um grupo</InputLabel>
+                      <InputLabel>Selecione um grupo *</InputLabel>
                       <Select
+                        required
                         value={group}
                         label="Selecione um grupo"
                         onChange={handleChange}
@@ -133,6 +144,8 @@ function Cover() {
                         }}
                         displayEmpty
                         inputProps={{ 'aria-label': 'Without label' }}
+                        name="group"
+                        {...register("group")}
                       >
                         {
                           nameGroup?.map(element => {
@@ -147,15 +160,34 @@ function Cover() {
                       <FormHelperText>Grupo de convívio do membro.</FormHelperText>
                     </Grid>
                     <MDBox>
-                      <MDInput
+                      <TextField 
+                        required
                         type="text"
                         size="small"
                         label="Nome Completo"
                         variant="standard"
                         fullWidth
-                        value={name}
-                        onChange={(e)=>inputChangeHandler(setName, e)}
+                        name="name"
+                        {...register("name",  { required: 'Nome é obringatório' , minLength: 3})}
                       />
+                      <FormHelperText className="Mui-error">{errors.name?.message}</FormHelperText>
+                    </MDBox>
+                    <MDBox>
+                    <InputLabel size="small">Data de Nascimento *</InputLabel>
+                      <Input 
+                        required
+                        type="text"
+                        label="Data de Nascimento"
+                        variant="standard"
+                        value={birthdate}
+                        name="birthDate"
+                        fullWidth
+                        sx={{mt: 2}}
+                        inputComponent={BirthDate}
+                        {...register("birthDate",  {  required: 'Data de Nascimento é obringatório' })}
+                        onBlur={handleInputBirth}
+                      />
+                      <FormHelperText className="Mui-error">{errors.birthDate?.message}</FormHelperText>
                     </MDBox>
                     <MDBox>
                       <InputLabel size="small">CEP</InputLabel>
@@ -164,23 +196,23 @@ function Cover() {
                         label="CEP"
                         variant="standard"
                         fullWidth
-                        value={cep}
-                        onBlur={completCep}
                         name="cepmask"
-                        sx={{mt: 2}}
+                        sx={{mt: 1}}
+                        value={cep}
                         inputComponent={CepCuston}
+                        {...register("cepmask", { maxLength: 11 })}
+                        onBlur={handleInputCep}
                       />
                     </MDBox>
                     <MDBox>
-                      <TextField
+                      <MDInput
+                        type="text"
                         label="Logradouro"
                         variant="standard"
                         fullWidth
                         size="small"
-                        name="name"
-                        {...register("name" , 
-                          {required: true, minLength: 3})
-                        }
+                        name="address"
+                        {...register("address", { minLength: 3 })}
                       />
                     </MDBox>
                     <MDBox>
@@ -213,18 +245,22 @@ function Cover() {
                         variant="standard"
                         fullWidth
                         size="small"
+                        name="city"
+                        {...register("city")}
                       />
                     </MDBox>
                     <MDBox>
                       <InputLabel id="demo-simple-select-label" size="small" style={{ marginBottom: 5 }}>Estado</InputLabel>
                       <Select
                         labelId="demo-simple-select-label"
-                        id="demo-simple-select"
+                        id="demo-simple-select-label"
                         value={uf}
                         label="Estado"
                         variant="standard"
-                        onChange={handleChange}
+                        onChange={handleChangeUf}
                         fullWidth
+                        name="uf"
+                        {...register("uf")}
                         sx={{ mt: 2 }}
                       >
                         <MenuItem value="AC">Acre</MenuItem>
@@ -259,19 +295,22 @@ function Cover() {
                     </MDBox>
                     <MDBox>
                       <InputLabel size="small">
-                        Telefone
+                        Telefone *
                       </InputLabel>
                       <Input
+                        required
                         type="text"
                         label="Telefone"
                         variant="standard"
                         value={phone}
-                        onBlur={handleInput}
-                        name="textmask"
+                        onBlur={handleInputPhone}
                         fullWidth
                         sx={{ mt: 2 }}
                         inputComponent={PhoneCuston}
+                        name="phone"
+                        {...register("phone", { required: 'Telefone é obringatório'})}
                       />
+                      <FormHelperText className="Mui-error">{errors.phone?.message}</FormHelperText>
                     </MDBox>
                     <MDBox>
                       <FormControl>
@@ -289,8 +328,8 @@ function Cover() {
                           name="row-radio-buttons-batizado"
                           defaultValue="true"
                         >
-                          <FormControlLabel value="true" control={<Radio />} label="Sim" />
-                          <FormControlLabel value="false" control={<Radio />} label="Não" />
+                          <FormControlLabel value="true" {...register("baptized")} control={<Radio />} label="Sim" />
+                          <FormControlLabel value="false"  {...register("baptized")} control={<Radio />} label="Não" />
                         </RadioGroup>
                       </FormControl>
                     </MDBox>
@@ -310,53 +349,64 @@ function Cover() {
                           name="row-radio-buttons-situacao"
                           defaultValue="Membro"
                         >
-                          <FormControlLabel value="Membro" control={<Radio />} label="Membro" />
-                          <FormControlLabel value="Congregado" control={<Radio />} label="Congregado" />
+                          <FormControlLabel value="Membro"  {...register("situacion")} control={<Radio />} label="Membro" />
+                          <FormControlLabel value="Congregado"  {...register("situacion")} control={<Radio />} label="Congregado" />
                         </RadioGroup>
                       </FormControl>
                     </MDBox>
                     <MDBox>
-                      <MDInput type="email" label="E-mail" variant="standard" fullWidth />
+                      <MDInput
+                        type="email"
+                        label="E-mail"
+                        variant="standard"
+                        fullWidth
+                        name="email"
+                        {...register("email")}/>
                     </MDBox>
                     <MDBox>
-                      <MDInput type="password" label="Senha" variant="standard" fullWidth />
+                      <MDInput
+                        type="password"
+                        label="Senha"
+                        variant="standard"
+                        fullWidth 
+                        name="password"
+                        {...register("password")}
+                      />
                     </MDBox>
-                    
-                    
                   </MDBox>
                 </MDBox>
               </Card>
             </Item>
             </form>
-            <Card>
-            <MDBox mt={4} mb={1}>
-                      <MDButton
-                        variant="contained"
-                        color="dark"
-                        fullWidth
-                        type="submit"
-                        form="hook-form"
-                      >
-                        Cadastrar
-                        <SaveIcon />
-                      </MDButton>
-                    </MDBox>
-                    <MDBox mt={3} mb={1} textAlign="center">
-                      <MDTypography variant="button" color="text">
-                        Já tem conta?{" "}
-                        <MDTypography
-                          component={Link}
-                          to="/authentication/sign-in"
-                          variant="button"
-                          color="info"
-                          fontWeight="medium"
-                          textGradient
-                        >
-                          Acessar aqui
-                        </MDTypography>
-                      </MDTypography>
-                    </MDBox>
-                    </Card>
+            <Card sx={{ marginTop: '8px'}}>
+              <MDBox mb={1}>
+                <MDButton
+                  variant="contained"
+                  color="dark"
+                  fullWidth
+                  type="submit"
+                  form="form-hook-form"
+                >
+                  Cadastrar
+                  <SaveIcon sx={{marginLeft: 1}} />
+                </MDButton>
+              </MDBox>
+              <MDBox mt={3} mb={1} textAlign="center">
+                <MDTypography variant="button" color="text">
+                  Já tem conta?{" "}
+                  <MDTypography
+                    component={Link}
+                    to="/authentication/sign-in"
+                    variant="button"
+                    color="info"
+                    fontWeight="medium"
+                    textGradient
+                  >
+                    Acessar aqui
+                  </MDTypography>
+                </MDTypography>
+              </MDBox>
+            </Card>
           </Grid>
         </Grid>
       </Box>
