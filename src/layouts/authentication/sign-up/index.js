@@ -27,7 +27,7 @@ function Cover() {
   const [nameUser, setNameUser] = useState('')
   const [idGroup, setIdGroup] = useState('')
   const [nameGroup, setNameGroup] = useState([])
-  const [showName, setShowName] = useState(true)
+  const [showName, setShowName] = useState(false)
   const [birthDay, setBirthDay] = useState('')
   const { enqueueSnackbar } = useSnackbar()
 
@@ -99,18 +99,19 @@ function Cover() {
           <Grid item md={12} xs={12} lg={12}>
             <Container maxWidth="sm">
               <MDBox sx={{ height: '100vh' }} >
-                <MDBox sx={{ height: "30px" }}>
-                </MDBox>
+                <MDBox sx={{ height: "30px" }} />
+                
                 <MDBox sx={{ textAlign: "center" }}>
                   <MDTypography
                     variant="h2"
-                  >Cadastro
+                  >A Família Campo de Boaz
                   </MDTypography>
                 </MDBox>
-                <MDBox sx={{ textAlign: "center" }}>
+                <MDBox sx={{ textAlign: "center", mb: 5}}>
                   <MDTypography
                     variant="subtitle1"
-                  >Queremos conhecer um pouco mais sobre você.
+                  >quer conhecer um pouco mais sobre você e contamos com você preenchendo todas as informações corretas. Vamos lá!!!
+                  
                   </MDTypography>
                 </MDBox>
                   <Card>
