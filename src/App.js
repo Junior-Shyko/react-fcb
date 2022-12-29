@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -96,6 +96,18 @@ export default function App() {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
+  const scrollInto = useRef(null)
+  useEffect(() => {
+    // scrollInto.current.scrollIntoView()
+    window.addEventListener("load", function () {
+      // Set a timeout...
+      setTimeout(function () {
+          // Hide the address bar!
+          window.scrollTo(0, 1);
+      }, 0);
+  });
+  })
+  
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
       if (route.collapse) {

@@ -2,7 +2,8 @@ import React, { useState } from "react"
 import Select from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import InputAdornment from "@mui/material/InputAdornment"
-import AccountCircle from "@mui/icons-material/AccountCircle"
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
+import TextField from '@mui/material/TextField';
 import Grid from "@mui/material/Grid"
 // Material Dashboard 2 React components
 import MDTypography from "components/MDTypography"
@@ -19,12 +20,9 @@ function SelectUf(props) {
 
   return (
     <Grid item md={12} xs={12} lg={12}>
-    <MDTypography id="simple-select-label"
-    variant="caption">Estado</MDTypography>
-
-    
-    <MDBox sx={{ display: 'flex', alignItems: 'flex-end' }}>
-      <Select
+    <MDBox sx={{ display: 'flex', alignItems: 'flex-end', mt: 2}}>
+      <TextField
+        select
         labelId="simple-select-label"
         id="simple-select-label"
         value={valueUf}
@@ -34,9 +32,18 @@ function SelectUf(props) {
         fullWidth
         name="uf"
         defaultValue={valueUf}
-       sx={{height:40}}
+       
+       InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <KeyboardArrowDownIcon
+              sx={{bgcolor: '#e9e5e5', fontSize: '20px !important', borderRadius: '50%' }} />
+          </InputAdornment>
+        ),
+        sx: {height:40}
+      }}
       >
-        <MenuItem value="AC">Acre</MenuItem>
+      <MenuItem value="AC">Acre</MenuItem>
         <MenuItem value="AL">Alagoas</MenuItem>
         <MenuItem value="AP">Amapá</MenuItem>
         <MenuItem value="AM">Amazonas</MenuItem>
@@ -64,7 +71,7 @@ function SelectUf(props) {
         <MenuItem value="SE">Sergipe</MenuItem>
         <MenuItem value="TO">Tocantins</MenuItem>
         <MenuItem value="EX">Estrangeiro</MenuItem>
-      </Select>
+      </TextField>
     </MDBox>
     </Grid>
   )

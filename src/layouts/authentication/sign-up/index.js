@@ -21,12 +21,16 @@ function Cover() {
   const [showSelect , setShowSelect] =  useState(true);
   const [textStepFooter, setTextStepFooter] = useState('Passo 1 de 4');
   const [titleStep, setTitleStep] = useState('Diga-nos qual o grupo você está!');
-  
+  const [idUser, setIdUser] = useState(null)
 
   function stepOne(value, titleStep) {
     setShowSelect(value)
     setTitleStep(titleStep)
     setTextStepFooter('Passo 2 de 3')
+  }
+  
+  function getIdUser(id) {
+    setIdUser(id)
   }
 
   return (
@@ -67,9 +71,9 @@ function Cover() {
                     </MDTypography>
                   </MDBox>
                   {showSelect 
-                    ? <SelectStepOne stepOne={stepOne}/>
+                    ? <SelectStepOne stepOne={stepOne} idUser={getIdUser}/>
                     : (
-                      <StepUserTwo />
+                      <StepUserTwo idUser={idUser}/>
                     )
                   }
 

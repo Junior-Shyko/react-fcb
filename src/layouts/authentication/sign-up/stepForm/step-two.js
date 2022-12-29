@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useForm } from "react-hook-form";
+import { api } from "./../../../../services/Api"
 
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -20,15 +21,16 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 // Componente desenvolvido
 import SelectUf from "./../../../general/Select-uf"
+import axios from "axios";
 
 
 // import colors from "../../../assets/theme/base/colors";
 // import MDTypography from "../../MDTypography";
 
-function StepUserTwo() {
+function StepUserTwo(props) {
+  console.log({props})
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
-
+ 
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [number, setNumber] = useState("");
@@ -65,7 +67,19 @@ function StepUserTwo() {
 
   function alterUf(uf) {
     console.log({uf})
-    setValue('uf', uf);
+    setValue('uf', uf)
+  }
+
+  const onSubmit = (data) => {
+    data['id'] = props.idUser
+    console.log({data})
+    api.post('up-user/' + props.idUser, data)
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log({err})
+    })
   }
 
   return (
@@ -80,7 +94,7 @@ function StepUserTwo() {
         <Box>
           <InputMask
             mask="(99) 99999-9999"
-            onChange={onPhoneChange}
+            onBlur={onPhoneChange}
             disabled={false}
             maskChar=" "
             {...register("phone", { required: 'Telefone é obringatório'})}
@@ -91,7 +105,7 @@ function StepUserTwo() {
                 label="Celular ou Whatsapp"
                 ref="phone"
                 name="phone"
-                variant="standard"
+                variant="outlined"
                 fullWidth
                 sx={{
                   mt: 1
@@ -108,6 +122,7 @@ function StepUserTwo() {
               fontWeight="regular"
               color="text"
               sx={{ cursor: "pointer", userSelect: "none", mt: 2 }}
+             
             >
               Batizado
             </MDTypography>

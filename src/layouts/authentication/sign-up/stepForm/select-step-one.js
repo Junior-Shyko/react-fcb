@@ -21,6 +21,7 @@ function SelectStepOne(props) {
   const [nameGroup, setNameGroup] = useState(props.group)
   const [stepOne, setStepOne] = useState(true);
   const [idGroup, setIdGroup] = useState('')
+  const [idUser, setIdUser] = useState('')
   const [showName, setShowName] = useState(false)
   const [birthDay, setBirthDay] = useState('')
   const { enqueueSnackbar } = useSnackbar()
@@ -40,21 +41,17 @@ function SelectStepOne(props) {
   }, [])
 
   const handleChange = (event) => {
-    console.log(event.target.value);
     setIdGroup(event.target.value)
 
     if (event.target.value > 0) {
-      console.log('nome completo')
       setShowName(true)
     }
     if (event.target.value == 0) {
-      console.log('nome false')
       setShowName(false)
     }
   };
 
   const onChangeDate = (event) => {
-    console.log('onChangeDate', event.target.value);
     setBirthDay(event.target.value)
   }
 
@@ -80,10 +77,18 @@ function SelectStepOne(props) {
       .then((res) => {
         console.log({ res })
         props.stepOne(false,'Mais uma etapa!')
-        // window.location.ref= 'http://localhost:3000/step-user-two/1';
+        setIdUser(res.data.id)
+        props.idUser(res.data.id)
       })
       .catch((err) => {
-        console.log({ err })
+        enqueueSnackbar('Ops!!! Verifique se os valores estão corretos.', {
+          autoHideDuration: 3500,
+          variant: 'error',
+          anchorOrigin: {
+            horizontal: 'center',
+            vertical: 'bottom'
+          }
+        });
       })
   }
 
