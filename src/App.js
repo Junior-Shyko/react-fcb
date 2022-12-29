@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -31,6 +31,7 @@ import createCache from "@emotion/cache";
 // Material Dashboard 2 React routes
 import routes from "routes";
 import DetailsGroups  from "./components/FCB/Groups/details";
+import StepUserTwo from "./components/FCB/User/Step/StepUserTwo";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
@@ -95,6 +96,18 @@ export default function App() {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
+  const scrollInto = useRef(null)
+  useEffect(() => {
+    // scrollInto.current.scrollIntoView()
+    window.addEventListener("load", function () {
+      // Set a timeout...
+      setTimeout(function () {
+          // Hide the address bar!
+          window.scrollTo(0, 1);
+      }, 0);
+  });
+  })
+  
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
       if (route.collapse) {
@@ -179,6 +192,7 @@ export default function App() {
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/dashboard" />} />
         <Route exact path="details-groups/:id" element={<DetailsGroups />} />
+        <Route exact path="step-user-two/:id" element={<StepUserTwo />} />
       </Routes>
     </ThemeProvider>
   );
