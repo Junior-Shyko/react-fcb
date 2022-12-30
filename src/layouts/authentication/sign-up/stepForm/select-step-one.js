@@ -72,7 +72,7 @@ function SelectStepOne(props) {
       name: nameUser,
       birthDate: birthDay
     };
-    console.log({ dataPost })
+
     api.post('create-user', dataPost)
       .then((res) => {
         console.log({ res })

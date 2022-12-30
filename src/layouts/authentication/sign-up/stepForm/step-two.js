@@ -15,38 +15,28 @@ import Radio from "@mui/material/Radio"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import MDButton from "components/MDButton"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
-import MenuItem from "@mui/material/MenuItem"
+import Alert from "@mui/material/Alert"
 // import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 // Componente desenvolvido
 import SelectUf from "./../../../general/Select-uf"
-import axios from "axios";
-
-
-// import colors from "../../../assets/theme/base/colors";
-// import MDTypography from "../../MDTypography";
+import AlertDialog from "./Step-success"
 
 function StepUserTwo(props) {
   console.log({props})
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
  
   const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [number, setNumber] = useState("");
-  const [district, setDistrict] = useState("");
   const [city, setCity] = useState("");
   const [uf, setUf] = useState("");
+  const [showModal, setShowModal] = useState(0);
 
   const onPhoneChange = (e: any) => setPhone(e.target.value);
-  // const onChangeDate = (event) => {
-  //   console.log('onChangeDate', event.target.value);
-  //   setBirthDay(event.target.value)
-  // }
+
   const checkCEP = (e) => {
-    console.log({e})
     const cep = e.target.value.replace(/\D/g, '');
-    console.log(cep);
+ 
     fetch(`https://viacep.com.br/ws/${cep}/json/`).then(res => res.json()).then(data => {
       console.log(data);
       // register({ name: 'address', value: data.logradouro });
@@ -66,22 +56,34 @@ function StepUserTwo(props) {
   };
 
   function alterUf(uf) {
-    console.log({uf})
     setValue('uf', uf)
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     data['id'] = props.idUser
-    console.log({data})
+ 
     api.post('up-user/' + props.idUser, data)
-    .then((res) => {
-      console.log(res)
+    .then((res) =>  {
+      console.log({res})
+      setShowModal(1)
+      console.log({showModal})
+      // successPost()
     })
     .catch((err) => {
       console.log({err})
     })
   }
 
+  const successPost = () => {
+    return (
+      <MDBox sx={{ textAlign: "center" }}>
+        <MDTypography
+          variant="subtitle2"
+        >Agora informa mais algumas informações de você.
+        </MDTypography>
+      </MDBox>
+    )
+  }
   return (
     <MDBox px={3}>
       <MDBox sx={{ textAlign: "center" }}>
@@ -267,6 +269,12 @@ function StepUserTwo(props) {
         </MDBox>
 
       </form>
+      <AlertDialog open={true}/>
+     {/* {showModal > 0 && (
+      
+      //  <Alert severity="success">This is a success alert — check it out!</Alert>
+     )} */}
+      
     </MDBox>
   );
 }
