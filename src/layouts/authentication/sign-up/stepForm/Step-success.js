@@ -9,15 +9,15 @@ import Grid from '@mui/material/Grid';
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
-export default function AlertDialog(props) {
+export default function StepSuccess(props) {
 
   const [open, setOpen] = React.useState(props.open);
-  console.log({open})
   const handleClickOpen = () => {
     setOpen(props.open);
   };
 
   const handleClose = () => {
+    window.location.href = '/authentication/sign-up'
     setOpen(false);
   };
 

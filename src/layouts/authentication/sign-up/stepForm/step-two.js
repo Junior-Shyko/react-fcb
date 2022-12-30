@@ -13,15 +13,14 @@ import FormControl from "@mui/material/FormControl"
 import RadioGroup from "@mui/material/RadioGroup"
 import Radio from "@mui/material/Radio"
 import FormControlLabel from "@mui/material/FormControlLabel"
-import MDButton from "components/MDButton"
-import Select, { SelectChangeEvent } from "@mui/material/Select"
-import Alert from "@mui/material/Alert"
+import CircularProgress from '@mui/material/CircularProgress'
 // import Card from "@mui/material/Card";
+import MDButton from "components/MDButton"
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 // Componente desenvolvido
 import SelectUf from "./../../../general/Select-uf"
-import AlertDialog from "./Step-success"
+import StepSuccess from "./Step-success"
 
 function StepUserTwo(props) {
   console.log({props})
@@ -31,6 +30,7 @@ function StepUserTwo(props) {
   const [city, setCity] = useState("");
   const [uf, setUf] = useState("");
   const [showModal, setShowModal] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const onPhoneChange = (e: any) => setPhone(e.target.value);
 
@@ -50,40 +50,29 @@ function StepUserTwo(props) {
     });
   }
 
-  const handleChangeUf = (event: SelectChangeEvent) => {
-    setUf(event.target.value);
 
-  };
 
   function alterUf(uf) {
     setValue('uf', uf)
   }
 
   const onSubmit = async(data) => {
+    setLoading(true)
     data['id'] = props.idUser
- 
+    
     api.post('up-user/' + props.idUser, data)
     .then((res) =>  {
       console.log({res})
       setShowModal(1)
-      console.log({showModal})
-      // successPost()
+      setTimeout(() => {
+        setLoading(false)
+      }, 1500);
     })
     .catch((err) => {
       console.log({err})
     })
   }
 
-  const successPost = () => {
-    return (
-      <MDBox sx={{ textAlign: "center" }}>
-        <MDTypography
-          variant="subtitle2"
-        >Agora informa mais algumas informações de você.
-        </MDTypography>
-      </MDBox>
-    )
-  }
   return (
     <MDBox px={3}>
       <MDBox sx={{ textAlign: "center" }}>
@@ -266,17 +255,22 @@ function StepUserTwo(props) {
           >
             Finalizar registro
           </MDButton>
+          {loading && (
+            <MDBox sx={{ display: 'flex', justifyContent: "center"}}>
+            <CircularProgress color="secondary"/>
+            </MDBox>
+          )}
         </MDBox>
 
       </form>
-      <AlertDialog open={true}/>
-     {/* {showModal > 0 && (
       
+     {showModal > 0 && (
+      <StepSuccess open={true}/>
       //  <Alert severity="success">This is a success alert — check it out!</Alert>
-     )} */}
+     )}
       
     </MDBox>
   );
 }
-
+//20221230012398 - Lorany
 export default StepUserTwo;

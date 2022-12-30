@@ -7,8 +7,8 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from "@mui/material/InputLabel"
 import Select from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
-import TextField from '@mui/material/TextField';
-
+import TextField from '@mui/material/TextField'
+import CircularProgress from '@mui/material/CircularProgress'
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox"
 import MDTypography from "components/MDTypography"
@@ -24,6 +24,7 @@ function SelectStepOne(props) {
   const [idUser, setIdUser] = useState('')
   const [showName, setShowName] = useState(false)
   const [birthDay, setBirthDay] = useState('')
+  const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar()
 
   const getGroups = () => {
@@ -56,6 +57,8 @@ function SelectStepOne(props) {
   }
 
   const salvarDados = () => {
+    //habilitando o load
+    setLoading(true)
     if (idGroup == "" || nameUser == "" || birthDay == "") {
       enqueueSnackbar('Ops!!! Todos os campos são obrigatórios.', {
         autoHideDuration: 3500,
@@ -65,6 +68,9 @@ function SelectStepOne(props) {
           vertical: 'bottom'
         }
       });
+      setTimeout(() => {
+        setLoading(false)
+      }, 200);
     }
 
     var dataPost = {
@@ -74,22 +80,26 @@ function SelectStepOne(props) {
     };
 
     api.post('create-user', dataPost)
-      .then((res) => {
-        console.log({ res })
-        props.stepOne(false,'Mais uma etapa!')
-        setIdUser(res.data.id)
-        props.idUser(res.data.id)
-      })
-      .catch((err) => {
-        enqueueSnackbar('Ops!!! Verifique se os valores estão corretos.', {
-          autoHideDuration: 3500,
-          variant: 'error',
-          anchorOrigin: {
-            horizontal: 'center',
-            vertical: 'bottom'
-          }
-        });
-      })
+    .then((res) => {
+      console.log({ res })
+      props.stepOne(false,'Mais uma etapa!')
+      setIdUser(res.data.id)
+      props.idUser(res.data.id)
+      setTimeout(() => {
+        setLoading(false)
+      }, 1500);
+      
+    })
+    .catch((err) => {
+      enqueueSnackbar('Ops!!! Verifique se os valores estão corretos.', {
+        autoHideDuration: 3500,
+        variant: 'error',
+        anchorOrigin: {
+          horizontal: 'center',
+          vertical: 'bottom'
+        }
+      });
+    })
   }
 
   const showSel = () => {
@@ -174,7 +184,11 @@ function SelectStepOne(props) {
             >
               Próximo passo
             </MDButton>
-
+            {loading && (
+             <MDBox sx={{ display: 'flex', justifyContent: "center"}}>
+              <CircularProgress color="secondary"/>
+             </MDBox>
+            )}
           </MDBox>
           
         </MDBox>

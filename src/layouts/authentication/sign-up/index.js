@@ -19,14 +19,14 @@ import StepUserTwo from "./stepForm/step-two"
 function Cover() {
 
   const [showSelect , setShowSelect] =  useState(true);
-  const [textStepFooter, setTextStepFooter] = useState('Passo 1 de 4');
+  const [textStepFooter, setTextStepFooter] = useState('Passo 1 de 2');
   const [titleStep, setTitleStep] = useState('Diga-nos qual o grupo você está!');
   const [idUser, setIdUser] = useState(null)
 
   function stepOne(value, titleStep) {
     setShowSelect(value)
     setTitleStep(titleStep)
-    setTextStepFooter('Passo 2 de 3')
+    setTextStepFooter('Passo 2 de 2')
   }
   
   function getIdUser(id) {
