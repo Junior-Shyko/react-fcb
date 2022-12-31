@@ -8,12 +8,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import MDBox from "components/MDBox"
 
 export default function StepSuccess(props) {
 
   const [open, setOpen] = React.useState(props.open);
-  const handleClickOpen = () => {
-    setOpen(props.open);
+  const redirectInsta = () => {    
+    window.location.href = 'https://www.instagram.com/familiacampodeboaz/'
   };
 
   const handleClose = () => {
@@ -43,18 +44,44 @@ export default function StepSuccess(props) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-          <MDTypography
-            color="inherit"
-            align="center"
-            variant="subtitle2"
-          >
-            Você realizou o seu cadastro de membro na
-            Igreja Família Campo de Boaz.
-            <img 
-              src="https://www.svgrepo.com/show/48177/check-mark.svg" 
-              width='96' 
-            />
-          </MDTypography>
+          <Grid container spacing={2}>
+              <MDBox 
+                sx={{ 
+                  display: 'flex', 
+                  justifyContent: "center",
+                  m: 2
+                }}>
+                  <MDTypography
+                    color="inherit"
+                    align="center"
+                    variant="subtitle2"
+                  >
+                  Você realizou o seu cadastro de membro na
+                  Igreja Família Campo de Boaz.
+                  </MDTypography>
+              </MDBox>             
+            </Grid>
+            <Grid
+              container
+              spacing={2}
+              mb={2}
+            >
+              <MDBox 
+                sx={{ 
+                  display: 'flex', 
+                  justifyContent: "center",
+                  m: 'auto'
+                }}>
+                <img 
+                src="https://www.svgrepo.com/show/48177/check-mark.svg" 
+                width='96' 
+              />
+              </MDBox>
+           
+            </Grid>
+          
+           
+         
           </DialogContentText>
           <DialogContentText id="alert-dialog-description">
           <MDTypography
@@ -79,7 +106,7 @@ export default function StepSuccess(props) {
             </Grid>
             <Grid item xs={6} md={6} 
               sx={{display: 'flex', justifyContent: 'flex-end' }}>
-              <Button onClick={handleClose} autoFocus>
+              <Button onClick={redirectInsta} autoFocus>
                 Página inicial
               </Button>
             </Grid>
