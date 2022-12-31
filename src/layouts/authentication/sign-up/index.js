@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import { api } from "./../../../services/Api"
+import React, { useState } from "react"
+
 // @mui material components
 import Grid from "@mui/material/Grid"
 import Box from '@mui/material/Box'
@@ -22,7 +22,11 @@ function Cover() {
   const [textStepFooter, setTextStepFooter] = useState('Passo 1 de 2');
   const [titleStep, setTitleStep] = useState('Diga-nos qual o grupo você está!');
   const [idUser, setIdUser] = useState(null)
-
+  
+  const quit = () => {
+    setShowSelect(true)
+    setTextStepFooter('Passo 1 de 2')
+  }
   function stepOne(value, titleStep) {
     setShowSelect(value)
     setTitleStep(titleStep)
@@ -83,8 +87,8 @@ function Cover() {
                         variant="text"
                         color="dark"
                         sx={{mb: 1}}
-                        onClick={(e) => setShowSelect(false)}
-                        >Voltar</MDButton>
+                        onClick={quit}
+                        >Voltar e desistir</MDButton>
                     </Grid>
                     <Grid item md={6} xs={6} lg={6}>
                     <MDBox sx={{ textAlign: "center", textAlign: 'right', mr: 1 }}>
@@ -96,11 +100,8 @@ function Cover() {
                 </MDBox>
                     </Grid>
                   </Grid>
-                  
                 </Card>
-
               </MDBox>
-
             </Container>
           </Grid>
         </Grid>
