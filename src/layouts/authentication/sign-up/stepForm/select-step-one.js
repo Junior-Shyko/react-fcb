@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef  } from "react"
 import InputMask from "react-input-mask"
+import { IMaskInput } from 'react-imask'
 import { useSnackbar } from "notistack"
 import { api } from "./../../../../services/Api"
+import BirthDate from "./../../../general/BirthDate"
 // Material Dashboard 2 React components
 import FormControl from '@mui/material/FormControl'
 import InputLabel from "@mui/material/InputLabel"
 import Select from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import TextField from '@mui/material/TextField'
+import Input from '@mui/material/Input'
+import InputAdornment from '@mui/material/InputAdornment';
 import CircularProgress from '@mui/material/CircularProgress'
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import CalendarMonthIcon from '@mui/icons-material/DateRange';
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox"
 import MDTypography from "components/MDTypography"
@@ -19,13 +25,15 @@ function SelectStepOne(props) {
   //PARA O USO DO SELECT
   const [nameUser, setNameUser] = useState('')
   const [nameGroup, setNameGroup] = useState(props.group)
-  const [stepOne, setStepOne] = useState(true);
+  const [stepOne, setStepOne] = useState(false);
   const [idGroup, setIdGroup] = useState('')
   const [idUser, setIdUser] = useState('')
   const [showName, setShowName] = useState(false)
   const [birthDay, setBirthDay] = useState('')
   const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar()
+  const ref = useRef(null);
+  const inputRef = useRef(null);
 
   const getGroups = () => {
     api.get('group')
@@ -102,9 +110,6 @@ function SelectStepOne(props) {
     })
   }
 
-  const showSel = () => {
-    props.stepOne(false)
-  }
   return (
     <MDBox px={3} >
       {props.stepOne && (
@@ -148,14 +153,21 @@ function SelectStepOne(props) {
             
           </MDBox>
           <MDBox mb={2}>
-           
-            <TextField
+          <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+           <InputLabel htmlFor="standard-adornment-amount">Nome Completo</InputLabel>
+            <Input
               label="Nome Completo"
               fullWidth
               onChange={(e) => setNameUser(e.target.value)}
               value={nameUser}
+              startAdornment={
+                <InputAdornment position="start">
+                  <AccountCircle />
+                </InputAdornment>
+              }
             />
-            <InputMask
+             </FormControl>
+            {/* <InputMask
               mask="99/99/9999"
               onChange={onChangeDate}
               disabled={false}
@@ -173,8 +185,43 @@ function SelectStepOne(props) {
                   }}
 
                 />}
-            </InputMask>
+            </InputMask> */}
+            
           </MDBox>
+          <MDBox>
+              {/* <InputLabel size="small">Telefone</InputLabel>
+              <Input
+                type="text"
+                label="Nascido em"
+                variant="outlined"
+                value={birthDay} 
+                onBlur={onChangeDate}
+                name="brithDate"
+                fullWidth
+                inputComponent={BirthDate}
+                className="MuiInputBase-formControl"
+              /> */}
+
+          <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+           <InputLabel>Data de nascimento</InputLabel>
+            <Input
+              type="text"
+              label="Nascido em"
+              variant="outlined"
+              value={birthDay} 
+              onBlur={onChangeDate}
+              name="brithDate"
+              fullWidth
+              inputComponent={BirthDate}
+              className="MuiInputBase-formControl"
+              startAdornment={
+                <InputAdornment position="start">
+                  <CalendarMonthIcon />
+                </InputAdornment>
+              }
+            />
+             </FormControl>
+            </MDBox>
           <MDBox px={3} mb={2}>
             <MDButton
               variant="gradient"

@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react"
-import { useForm } from "react-hook-form";
+import React, { useState } from "react"
+import { useForm  } from "react-hook-form";
 import { api } from "./../../../../services/Api"
 
 import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import Grid from "@mui/material/Grid"
 import InputMask from "react-input-mask"
 import TextField from "@mui/material/TextField"
 import FormHelperText from '@mui/material/FormHelperText'
@@ -12,8 +10,12 @@ import MDTypography from "components/MDTypography"
 import FormControl from "@mui/material/FormControl"
 import RadioGroup from "@mui/material/RadioGroup"
 import Radio from "@mui/material/Radio"
+import InputLabel from "@mui/material/InputLabel"
+import Input from "@mui/material/Input"
+import InputAdornment from '@mui/material/InputAdornment'
 import FormControlLabel from "@mui/material/FormControlLabel"
 import CircularProgress from '@mui/material/CircularProgress'
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 // import Card from "@mui/material/Card";
 import MDButton from "components/MDButton"
 import MDBox from "components/MDBox";
@@ -21,10 +23,11 @@ import MDInput from "components/MDInput";
 // Componente desenvolvido
 import SelectUf from "./../../../general/Select-uf"
 import StepSuccess from "./Step-success"
+import PhoneCuston from "../../../general/PhoneCuston"
 
 function StepUserTwo(props) {
   console.log({props})
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, control, formState: { errors } } = useForm();
  
   const [phone, setPhone] = useState("");
   const [city, setCity] = useState("");
@@ -50,8 +53,6 @@ function StepUserTwo(props) {
     });
   }
 
-
-
   function alterUf(uf) {
     setValue('uf', uf)
   }
@@ -59,7 +60,8 @@ function StepUserTwo(props) {
   const onSubmit = async(data) => {
     setLoading(true)
     data['id'] = props.idUser
-    
+    data['phone'] = phone
+    // console.log(data)
     api.post('up-user/' + props.idUser, data)
     .then((res) =>  {
       console.log({res})
@@ -83,27 +85,24 @@ function StepUserTwo(props) {
       </MDBox>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box>
-          <InputMask
-            mask="(99) 99999-9999"
+          <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
+          <InputLabel sx={{marginTop: '3px !important'}} size="small">Celular ou Whatsapp</InputLabel>
+          <Input
+            type="text"
+            label="Telefone"
+            variant="outlined"
+            value={phone} 
             onBlur={onPhoneChange}
-            disabled={false}
-            maskChar=" "
-            {...register("phone", { required: 'Telefone é obringatório'})}
-          >
-            {() =>
-              <TextField
-                type="text"
-                label="Celular ou Whatsapp"
-                ref="phone"
-                name="phone"
-                variant="outlined"
-                fullWidth
-                sx={{
-                  mt: 1
-                }}
-              />
+            name="phone"
+            fullWidth
+            inputComponent={PhoneCuston}
+            startAdornment={
+              <InputAdornment position="start">
+                <WhatsAppIcon />
+              </InputAdornment>
             }
-          </InputMask>
+          />
+          </FormControl>              
           <FormHelperText className="Mui-error">{errors.phone?.message}</FormHelperText>
         </Box>
         <MDBox>
@@ -112,8 +111,7 @@ function StepUserTwo(props) {
               variant="button"
               fontWeight="regular"
               color="text"
-              sx={{ cursor: "pointer", userSelect: "none", mt: 2 }}
-             
+              sx={{ cursor: "pointer", userSelect: "none", mt: 2 }}             
             >
               Batizado
             </MDTypography>
@@ -152,7 +150,6 @@ function StepUserTwo(props) {
         <MDBox>
           <InputMask
             mask="99.999-999"
-            // onChange={onPhoneChange}
             disabled={false}
             maskChar=" "
             {...register("cep", { maxLength: 10})}
@@ -261,12 +258,9 @@ function StepUserTwo(props) {
             </MDBox>
           )}
         </MDBox>
-
-      </form>
-      
+      </form>      
      {showModal > 0 && (
       <StepSuccess open={true}/>
-      //  <Alert severity="success">This is a success alert — check it out!</Alert>
      )}
       
     </MDBox>
