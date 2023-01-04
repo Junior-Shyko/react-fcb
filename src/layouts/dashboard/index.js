@@ -12,6 +12,8 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+import React, { useEffect, useState } from "react";
+import { api, getUserData } from "../../services/Api";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -37,7 +39,19 @@ import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+  const [user, setUser] = useState("");
 
+  useEffect(() => {
+    getUserData()
+    .then((resp) => {
+      console.log({resp})
+      // setUser(resp.data)
+    })
+    .catch((err) => {
+      console.log({ err });
+    });
+  }, []);
+  
   return (
     <DashboardLayout>
       <DashboardNavbar />

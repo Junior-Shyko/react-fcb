@@ -14,11 +14,17 @@ Coded by www.creative-tim.com
 */
 
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { api } from "./../../../services/Api";
+import { useSnackbar } from 'notistack';
 
 // @mui material components
-import Grid from "@mui/material/Grid"
+import Grid from "@mui/material/Grid";
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import Grow from '@mui/material/Grow';
+
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -30,7 +36,30 @@ import PageLayout from "../../../examples/LayoutContainers/PageLayout";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
+  const { handleSubmit, register } = useForm();
+  const { enqueueSnackbar } = useSnackbar();
 
+  const onSubmit = (data) => {
+    console.log(data)
+    api.post('login', data)
+    .then((res) => {
+      console.log({res})
+      sessionStorage.setItem('user' , res.data.access_token)
+      window.location.href = api.urlBase + 'bashboard';
+    })
+    .catch((err) => {
+      console.log(err)
+      enqueueSnackbar(err.response.data.message,{ 
+        autoHideDuration: 4500,
+        variant: 'error',
+        TransitionComponent: Grow,
+        anchorOrigin: {
+          horizontal: 'center',
+          vertical: 'bottom'
+        }
+      });
+    })
+  };
   return (
     <PageLayout>
       <MDBox  sx={{
@@ -75,19 +104,21 @@ function Basic() {
                     </MDTypography>
                   </Grid>                                    
                 </MDBox>
-                <MDBox component="form" role="form" m={7}>
-                  <MDBox mb={2}>
-                    <MDInput type="email" label="Email" fullWidth />
-                  </MDBox>
-                  <MDBox mb={2}>
-                    <MDInput type="password" label="Password" fullWidth />
-                  </MDBox>
-                  <MDBox mt={4} mb={1}>
-                    <MDButton variant="gradient" color="info" fullWidth>
-                      Fazer login
-                    </MDButton>
-                  </MDBox>
-                </MDBox>
+                <Box  m={7}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <MDBox mb={2}>
+                      <MDInput type="email" label="Email" fullWidth  {...register("email")} />
+                    </MDBox>
+                    <MDBox mb={2}>
+                      <MDInput type="password" label="Password" fullWidth {...register("password")}  />
+                    </MDBox>
+                    <MDBox mt={4} mb={1}>
+                      <MDButton variant="gradient" color="info" fullWidth type="submit">
+                        Fazer login
+                      </MDButton>
+                    </MDBox>
+                  </form>
+                </Box>
               </MDBox>
 
               <MDBox mt={3} mb={1} textAlign="center">
