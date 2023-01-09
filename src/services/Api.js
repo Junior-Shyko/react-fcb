@@ -17,7 +17,7 @@ export async function getUserData(){
     let obj = {
         token_access: token
     };
-    const response = await axios.post(urlBaseApi + "/me", obj,{
+    const response = await axios.post(urlBaseApi + "me", obj,{
         headers: {
         'Authorization': `bearer ${token}`
         }

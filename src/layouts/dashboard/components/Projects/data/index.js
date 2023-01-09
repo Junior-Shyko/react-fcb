@@ -71,10 +71,10 @@ export default function data() {
 
   return {
     columns: [
-      { Header: "companies", accessor: "companies", width: "45%", align: "left" },
-      { Header: "members", accessor: "members", width: "10%", align: "left" },
-      { Header: "budget", accessor: "budget", align: "center" },
-      { Header: "completion", accessor: "completion", align: "center" },
+      { Header: "Nome do grupo", accessor: "companies", width: "45%", align: "left" },
+      { Header: "Membros", accessor: "members", width: "10%", align: "left" },
+      { Header: "Congregados", accessor: "budget", align: "center" },
+      { Header: "Líder", accessor: "completion", align: "center" },
     ],
 
     rows: [
@@ -97,7 +97,10 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={60} color="info" variant="gradient" label={false} />
+            {/* <MDProgress value={60} color="info" variant="gradient" label={false} /> */}
+            <MDTypography variant="caption" color="text" fontWeight="medium">
+              Marcos Paulo
+            </MDTypography>
           </MDBox>
         ),
       },
@@ -118,7 +121,10 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={10} color="info" variant="gradient" label={false} />
+            {/* <MDProgress value={10} color="info" variant="gradient" label={false} /> */}
+            <MDTypography variant="caption" color="text" fontWeight="medium">
+              Andreia Lima
+            </MDTypography>
           </MDBox>
         ),
       },
@@ -139,7 +145,11 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={100} color="success" variant="gradient" label={false} />
+            {/* <MDProgress value={100} color="success" variant="gradient" label={false} />
+             */}
+            <MDTypography variant="caption" color="text" fontWeight="medium">
+              Pedro da silva
+            </MDTypography>
           </MDBox>
         ),
       },
@@ -162,7 +172,10 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={100} color="success" variant="gradient" label={false} />
+            {/* <MDProgress value={100} color="success" variant="gradient" label={false} /> */}
+            <MDTypography variant="caption" color="text" fontWeight="medium">
+              Vilma Sales
+            </MDTypography>
           </MDBox>
         ),
       },
@@ -180,7 +193,10 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={25} color="info" variant="gradient" label={false} />
+            {/* <MDProgress value={25} color="info" variant="gradient" label={false} /> */}
+            <MDTypography variant="caption" color="text" fontWeight="medium">
+            Bento Nathan
+            </MDTypography>
           </MDBox>
         ),
       },
@@ -201,7 +217,10 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={40} color="info" variant="gradient" label={false} />
+            {/* <MDProgress value={40} color="info" variant="gradient" label={false} /> */}
+            <MDTypography variant="caption" color="text" fontWeight="medium">
+              João Duarte
+            </MDTypography>
           </MDBox>
         ),
       },

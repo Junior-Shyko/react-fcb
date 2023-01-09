@@ -61,8 +61,8 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="dark"
-                icon="weekend"
-                title="Bookings"
+                icon="person"
+                title="Total de usuários"
                 count={281}
                 percentage={{
                   color: "success",
@@ -75,9 +75,9 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Today's Users"
-                count="2,300"
+                icon="peopleall"
+                title="Total de grupos"
+                count="23"
                 percentage={{
                   color: "success",
                   amount: "+3%",
@@ -90,9 +90,9 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="success"
-                icon="store"
-                title="Revenue"
-                count="34k"
+                icon="cake"
+                title="Níver do mês"
+                count="3"
                 percentage={{
                   color: "success",
                   amount: "+1%",
@@ -117,6 +117,17 @@ function Dashboard() {
             </MDBox>
           </Grid>
         </Grid>
+        
+        <MDBox>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6} lg={8}>
+              <Projects />
+            </Grid>
+            <Grid item xs={12} md={6} lg={4}>
+              <OrdersOverview />
+            </Grid>
+          </Grid>
+        </MDBox>
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
@@ -155,16 +166,6 @@ function Dashboard() {
                   chart={tasks}
                 />
               </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
-              <Projects />
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
             </Grid>
           </Grid>
         </MDBox>
