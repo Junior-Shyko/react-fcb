@@ -38,6 +38,7 @@ function ModalDeleteUserGroup(props) {
         }
       });
       setOpen(false)
+      window.location.reload(true);
     })
     .catch((err) => {
       console.log(err.response)

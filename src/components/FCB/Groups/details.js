@@ -47,7 +47,7 @@ export default function Details(){
   }
 
   const getNameGroup = () => {
-    console.log({routeBack})
+
     api.get("group/" + id)
       .then((res) => {
         // console.log({ res })

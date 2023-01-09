@@ -38,7 +38,7 @@ function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const { handleSubmit, register } = useForm();
   const { enqueueSnackbar } = useSnackbar();
-
+ console.log('')
   const onSubmit = (data) => {
     console.log(data)
     api.post('login', data)

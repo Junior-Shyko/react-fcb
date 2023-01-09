@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSnackbar } from 'notistack';
-import { api } from '../../../services/Api';
+import { api, urlBase } from '../../../services/Api';
 
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
@@ -15,7 +15,7 @@ import MDButton from "components/MDButton";
 import MDBox from "components/MDBox";
 
 const SelectMember = (props) => {
-
+  console.log('api' ,urlBase + 'details-group/'+ props.idGroup);
   const [leader, setLeader] = useState()
   const [nameVinc, setNameVinc] = useState()
   const { enqueueSnackbar } = useSnackbar()
@@ -62,6 +62,7 @@ const SelectMember = (props) => {
           vertical: 'bottom'
         }
       });
+      window.location.reload(true);
     })
     .catch((err) => {
       console.log({err})
