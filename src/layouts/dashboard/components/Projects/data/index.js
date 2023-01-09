@@ -73,7 +73,7 @@ export default function data() {
     columns: [
       { Header: "Nome do grupo", accessor: "companies", width: "45%", align: "left" },
       { Header: "Membros", accessor: "members", width: "10%", align: "left" },
-      { Header: "Congregados", accessor: "budget", align: "center" },
+      { Header: "Data", accessor: "budget", align: "center" },
       { Header: "Líder", accessor: "completion", align: "center" },
     ],
 

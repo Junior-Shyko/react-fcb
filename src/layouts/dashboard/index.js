@@ -65,9 +65,9 @@ function Dashboard() {
                 title="Total de usuários"
                 count={281}
                 percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  // color: "success",
+                  // amount: "+55%",
+                  label: "Usuários cadastrados",
                 }}
               />
             </MDBox>
@@ -79,9 +79,9 @@ function Dashboard() {
                 title="Total de grupos"
                 count="23"
                 percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
+                  // color: "success",
+                  // amount: "+3%",
+                  label: "Grupos cadastrados",
                 }}
               />
             </MDBox>
@@ -94,9 +94,9 @@ function Dashboard() {
                 title="Níver do mês"
                 count="3"
                 percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
+                  // color: "success",
+                  // amount: "+1%",
+                  label: "Aniversariantes do mès",
                 }}
               />
             </MDBox>
