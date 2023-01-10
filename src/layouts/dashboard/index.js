@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import React, { useEffect, useState } from "react";
-import { api, getUserData } from "../../services/Api";
+import { api, getUserData, urlBase } from "../../services/Api";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -40,6 +40,28 @@ import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const [user, setUser] = useState("");
+  const [countUser, setCountUser] = useState(0);
+  const [countGroups, setCountGroups] = useState(0);
+  
+  const getCountUsers = () => {
+    api.get('user/count')
+    .then((res) => {
+      console.log({res})
+      setCountUser(res.data.message)
+    })
+    .catch((err) => {
+      console.log({err})
+    })
+  }
+  const getCountGroups = () => {
+    api.get('groups/count')
+    .then((res) => {
+      setCountGroups(res.data.message)
+    })
+    .catch((err) => {
+      console.log({err})
+    })
+  }
 
   useEffect(() => {
     getUserData()
@@ -50,6 +72,8 @@ function Dashboard() {
     .catch((err) => {
       console.log({ err });
     });
+    getCountUsers();
+    getCountGroups();
   }, []);
   
   return (
@@ -63,11 +87,12 @@ function Dashboard() {
                 color="dark"
                 icon="person"
                 title="Total de usuários"
-                count={281}
+                count={countUser}
                 percentage={{
                   // color: "success",
                   // amount: "+55%",
                   label: "Usuários cadastrados",
+                  link: "../todos-usuarios",
                 }}
               />
             </MDBox>
@@ -77,11 +102,12 @@ function Dashboard() {
               <ComplexStatisticsCard
                 icon="peopleall"
                 title="Total de grupos"
-                count="23"
+                count={countGroups}
                 percentage={{
                   // color: "success",
                   // amount: "+3%",
-                  label: "Grupos cadastrados",
+                  label: "Todos grupos cadastrados",
+                  link: "groups/all"
                 }}
               />
             </MDBox>
@@ -96,7 +122,8 @@ function Dashboard() {
                 percentage={{
                   // color: "success",
                   // amount: "+1%",
-                  label: "Aniversariantes do mès",
+                  label: "Aniversariantes do mês",
+                  link: "user/all"
                 }}
               />
             </MDBox>
@@ -112,6 +139,7 @@ function Dashboard() {
                   color: "success",
                   amount: "",
                   label: "Just updated",
+                  link: "user/all"
                 }}
               />
             </MDBox>

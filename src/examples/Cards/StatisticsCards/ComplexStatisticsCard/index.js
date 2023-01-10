@@ -15,15 +15,18 @@ Coded by www.creative-tim.com
 
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
+import Button from '@mui/material/Button';
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 function ComplexStatisticsCard({ color, title, count, percentage, icon }) {
   return (
@@ -65,6 +68,12 @@ function ComplexStatisticsCard({ color, title, count, percentage, icon }) {
             {percentage.amount}
           </MDTypography>
           &nbsp;{percentage.label}
+          <MDButton variant="gradient" size="small" color="success" circular={true}>
+            <Link
+              to={percentage.link}
+              style={{color: 'white'}}
+            >Lista</Link>
+          </MDButton>
         </MDTypography>
       </MDBox>
     </Card>
