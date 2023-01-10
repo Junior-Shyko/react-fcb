@@ -106,7 +106,7 @@ function Dashboard() {
                 percentage={{
                   // color: "success",
                   // amount: "+3%",
-                  label: "Todos grupos cadastrados",
+                  label: "Grupos cadastrados",
                   link: "groups/all"
                 }}
               />
@@ -122,7 +122,7 @@ function Dashboard() {
                 percentage={{
                   // color: "success",
                   // amount: "+1%",
-                  label: "Aniversariantes do mês",
+                  label: "Aniversário do mês",
                   link: "user/all"
                 }}
               />

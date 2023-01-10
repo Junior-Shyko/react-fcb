@@ -22,6 +22,7 @@ import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
 import Button from '@mui/material/Button';
+import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -59,21 +60,25 @@ function ComplexStatisticsCard({ color, title, count, percentage, icon }) {
       <Divider />
       <MDBox pb={2} px={2}>
         <MDTypography component="p" variant="button" color="text" display="flex">
-          <MDTypography
-            component="span"
-            variant="button"
-            fontWeight="bold"
-            color={percentage.color}
-          >
-            {percentage.amount}
-          </MDTypography>
-          &nbsp;{percentage.label}
-          <MDButton variant="gradient" size="small" color="success" circular={true}>
-            <Link
-              to={percentage.link}
-              style={{color: 'white'}}
-            >Lista</Link>
-          </MDButton>
+            <Grid item xs={6} md={6} lg={6}>
+              <MDTypography
+                component="span"
+                variant="button"
+                fontWeight="bold"
+                color={percentage.color}
+              >
+                {percentage.amount}
+              </MDTypography>
+              &nbsp;{percentage.label}
+            </Grid>
+            <Grid item xs={6} md={6} lg={6}  display="flex" justifyContent="end">
+              <MDButton variant="gradient" size="small" color="success" circular={true}>
+                <Link
+                  to={percentage.link}
+                  style={{color: 'white'}}
+                >Lista</Link>
+              </MDButton>
+            </Grid>
         </MDTypography>
       </MDBox>
     </Card>
