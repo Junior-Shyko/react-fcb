@@ -14,15 +14,19 @@ import MDTypography from "../../MDTypography";
 import MDButton from "components/MDButton";
 // Material Dashboard 2 React examples
 import DataTable from "./../../../examples/Tables/DataTable";
+import columnsUsers from "./columnsUsers";
 // import { Container } from './styles';
 
 function ListUser() {
-  const { columns, rows } = useState([]);
+  const [ rows, setRows ] = useState([]);
+  //Definição das colunas da tabela
+  const { columns } = columnsUsers();
 
   const getAllUsers = () => {
-    api.get('user/count')
+    api.get('user/all')
     .then((res) => {
       console.log({res})
+      setRows(res.data)
     })
     .catch((err) => {
       console.log({err})
@@ -45,18 +49,16 @@ function ListUser() {
             opacity={1}
           >
             <Grid item xs={12} md={12} lg={12}>
-              <List>
-                <ListItem disablePadding>
-                  <ListItemButton>
-                    <ListItemText primary="Trash" />
-                  </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemButton component="a" href="#simple-list">
-                    <ListItemText primary="Spam" />
-                  </ListItemButton>
-                </ListItem>
-              </List>
+              <MDBox>
+                <DataTable
+                  table={{ columns, rows }}
+                  showTotalEntries={true}
+                  isSorted={true}
+                  noEndBorder
+                  entriesPerPage={true}
+                  canSearch={true}
+                />
+              </MDBox>
             </Grid>
           </MDBox>
     </DashboardLayout>
