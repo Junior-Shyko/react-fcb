@@ -21,7 +21,8 @@ export default function columnsusers() {
                         {/* <Badge  badgeContent={value} container   color="secundary"/> */}
                         { 
                         value === "Líder em Treinamento" && (
-                            <MDTypography fontWeight="light" variant="overline" sx={{color: '#56a155', border: "1px solid", borderRadius: '20px', p: 0.5}}>
+                            <MDTypography fontWeight="medium" variant="overline"
+                             sx={{color: '#379735', p: 0.5}}>
                                {value}
                             </MDTypography>
                         )}
@@ -38,6 +39,27 @@ export default function columnsusers() {
         
             },
             { Header: "Grupo", accessor: "nameGroup", align: "center" },
+            { 
+                Header: "Status", accessor: "active", align: "center" ,
+                Cell: ({ value }) => (
+                    <MDBox display="flex">
+                        {
+                            value === 1 && (
+                                <MDTypography fontWeight="regular" variant="overline">
+                                Ativo
+                                </MDTypography>
+                            )
+                        }
+                        {
+                            value === 0 && (
+                                <MDTypography fontWeight="light" variant="overline" color="error">
+                                Desativo
+                                </MDTypography>
+                            )
+                        }
+                    </MDBox>
+                )
+            },
             { Header: "Detalhes", accessor: "idUser", id: 'edit', align: "center",
                 // Cell: ({id}) => (<button onClick={()=>{console.log('clicked value', id)}}>Edit -{id}-</button>)
                 Cell: ({ value }) => (
@@ -45,7 +67,8 @@ export default function columnsusers() {
                         {/* <MDProgress value={100} color="success" variant="gradient" label={false} />
                         */}
                         <MDButton variant="gradient" color="info" size="medium" circular={true} iconOnly title="Editar Usuário">
-                          <Link to={`../usuario/editar/` + value} relative="path" >
+                          {/* <Link to={`../usuario/editar/` + value} relative="path" > */}
+                          <Link to="../profile" relative="path" >
                             <MDTypography color="white" >
                                 <ManageAccountsIcon />
                             </MDTypography>
