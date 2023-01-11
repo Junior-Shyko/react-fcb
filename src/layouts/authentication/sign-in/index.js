@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { api } from "./../../../services/Api";
 import { useSnackbar } from 'notistack';
@@ -33,32 +33,20 @@ import MDButton from "components/MDButton";
 
 // Authentication layout components
 import PageLayout from "../../../examples/LayoutContainers/PageLayout";
+// Componente próprio 
+import { AuthContext } from "Contexts/AuthContext";
 
 function Basic() {
+  // para autenticação
+  const { submitAuth } = useContext(AuthContext);
+
   const [rememberMe, setRememberMe] = useState(false);
   const { handleSubmit, register } = useForm();
   const { enqueueSnackbar } = useSnackbar();
- console.log('')
+
   const onSubmit = (data) => {
-    console.log(data)
-    api.post('login', data)
-    .then((res) => {
-      console.log({res})
-      sessionStorage.setItem('user' , res.data.access_token)
-      window.location.href = api.urlBase + 'bashboard';
-    })
-    .catch((err) => {
-      console.log(err)
-      enqueueSnackbar(err.response.data.message,{ 
-        autoHideDuration: 4500,
-        variant: 'error',
-        TransitionComponent: Grow,
-        anchorOrigin: {
-          horizontal: 'center',
-          vertical: 'bottom'
-        }
-      });
-    })
+    submitAuth({data})
+    console.log({data})
   };
   return (
     <PageLayout>
