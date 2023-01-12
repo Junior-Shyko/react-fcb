@@ -14,7 +14,7 @@ Coded by www.creative-tim.com
 */
 
 import { useState, useContext } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { api } from "./../../../services/Api";
 import { useSnackbar } from 'notistack';
 
@@ -23,7 +23,6 @@ import Grid from "@mui/material/Grid";
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Grow from '@mui/material/Grow';
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -35,18 +34,48 @@ import MDButton from "components/MDButton";
 import PageLayout from "../../../examples/LayoutContainers/PageLayout";
 // Componente próprio 
 import { AuthContext } from "Contexts/AuthContext";
+import useAuth from "hooks/useAuth";
+import StepUserTwo from "../sign-up/stepForm/step-two";
+import { useNavigate  } from "react-router-dom";
 
 function Basic() {
   // para autenticação
-  const { submitAuth } = useContext(AuthContext);
+  const { signin } = useAuth();
+  const [user, setUser] = useState();
+  const [token, setToken] = useState();
+  const navigate = useNavigate();
 
   const [rememberMe, setRememberMe] = useState(false);
   const { handleSubmit, register } = useForm();
   const { enqueueSnackbar } = useSnackbar();
 
   const onSubmit = (data) => {
-    submitAuth({data})
-    console.log({data})
+    api.post('login', data)
+    .then((res) => {
+        setToken(res.data.access_token)
+        // console.log('token : ', res.data.access_token)
+        const response = signin(res.data.access_token)
+        console.log({response})
+        if(response) {
+          navigate("/dashboard")
+        }
+    })
+    .catch((err) => {
+        console.log('error signin: ', err)
+    });
+    //Passando autorização com o token
+    
+    // api.post('me')
+    // .then((res) => {
+    //     console.log('me: ', res);
+    //     setUser(res.data)
+    //     signin(token, user)
+    // })
+    // .catch((err) => {
+    //     console.log('error me: ', err)
+    // });
+   
+
   };
   return (
     <PageLayout>

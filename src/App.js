@@ -43,8 +43,7 @@ import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
 export default function App() {
-  const { auth } = useContext(AuthContext)
-  console.log({auth})
+
   const [controller, dispatch] = useMaterialUIController();
   const {
     miniSidenav,
