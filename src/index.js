@@ -21,7 +21,6 @@ import App from "App";
 
 // Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
-import { SignInProvider } from "./Contexts/AuthContext";
 import { AuthProvider } from "Contexts/auth";
 
 ReactDOM.render(

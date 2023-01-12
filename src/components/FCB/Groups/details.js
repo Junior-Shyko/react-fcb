@@ -75,7 +75,14 @@ export default function Details(){
         });
       })
       .catch((err) => {
-
+        enqueueSnackbar('Ops! um erro inesperado!',{ 
+          autoHideDuration: 2000,
+          variant: 'error',
+          anchorOrigin: {
+            horizontal: 'center',
+            vertical: 'bottom'
+          }
+        });
       })
   };
 

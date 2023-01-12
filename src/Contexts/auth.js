@@ -1,18 +1,21 @@
 import { createContext, useEffect, useState } from "react";
+import { useNavigate  } from "react-router-dom";
 import { api } from "./../services/Api";
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState();
-
+  const [user, setUser] = useState([]);
+  const navigate = useNavigate();
   
 useEffect(() => {
-    const userToken = localStorage.getItem("token");
-    const userAuth = localStorage.getItem("user");
+    const userToken = sessionStorage.getItem("token");
+    const userAuth = sessionStorage.getItem("user");
     console.log({userToken})
     console.log({userAuth})
-    setUser(userAuth)
+
+    // setUser(userAuth)
+
     // localStorage.removeItem("token");
     // localStorage.removeItem("user");
 //     const usersStorage = localStorage.getItem("users_bd");
@@ -37,8 +40,11 @@ useEffect(() => {
         console.log('me: ', res);
         const usersStorage = JSON.stringify(res.data);
         console.log(usersStorage)
-        localStorage.setItem('token' , token)
-        localStorage.setItem('user' , usersStorage)
+        sessionStorage.setItem('token' , token)
+        sessionStorage.setItem('user' , usersStorage)
+        // localStorage.setItem("token", token);
+        // localStorage.setItem("user", usersStorage);
+        setUser(res.data)
        
     })
     .catch((err) => {
@@ -87,7 +93,10 @@ useEffect(() => {
 
   const signout = () => {
     // setUser(null);
-    // localStorage.removeItem("user_token");
+    console.log('signout auth.js')
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    navigate("/authentication/sign-in")
   };
 
   return (

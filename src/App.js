@@ -1,6 +1,4 @@
-import { useState, useEffect, useMemo, useRef, useContext } from "react";
-
-import { AuthContext } from "./Contexts/AuthContext";
+import { useState, useEffect, useMemo, useRef } from "react";
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
@@ -37,6 +35,8 @@ import ListUser from "./components/FCB/User/ListUser";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
+
+
 
 // Images
 import brandWhite from "assets/images/logo-ct.png";
@@ -98,18 +98,6 @@ export default function App() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
-
-  const scrollInto = useRef(null)
-  useEffect(() => {
-    // scrollInto.current.scrollIntoView()
-    window.addEventListener("load", function () {
-      // Set a timeout...
-      setTimeout(function () {
-          // Hide the address bar!
-          window.scrollTo(0, 1);
-      }, 0);
-  });
-  })
   
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {

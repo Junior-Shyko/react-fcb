@@ -33,18 +33,12 @@ import MDButton from "components/MDButton";
 // Authentication layout components
 import PageLayout from "../../../examples/LayoutContainers/PageLayout";
 // Componente próprio 
-import { AuthContext } from "Contexts/AuthContext";
 import useAuth from "hooks/useAuth";
 import StepUserTwo from "../sign-up/stepForm/step-two";
-import { useNavigate  } from "react-router-dom";
 
 function Basic() {
   // para autenticação
   const { signin } = useAuth();
-  const [user, setUser] = useState();
-  const [token, setToken] = useState();
-  const navigate = useNavigate();
-
   const [rememberMe, setRememberMe] = useState(false);
   const { handleSubmit, register } = useForm();
   const { enqueueSnackbar } = useSnackbar();
@@ -52,30 +46,23 @@ function Basic() {
   const onSubmit = (data) => {
     api.post('login', data)
     .then((res) => {
-        setToken(res.data.access_token)
-        // console.log('token : ', res.data.access_token)
         const response = signin(res.data.access_token)
-        console.log({response})
-        if(response) {
-          navigate("/dashboard")
+        if(response.auth) {
+          window.location.href = api.urlBase + 'bashboard';
         }
     })
     .catch((err) => {
-        console.log('error signin: ', err)
+        console.log('error signin: ', err.response.data.message)
+        enqueueSnackbar(err.response.data.message,{ 
+          autoHideDuration: 2000,
+          variant: 'error',
+          anchorOrigin: {
+            horizontal: 'center',
+            vertical: 'bottom'
+          }
+        });
     });
-    //Passando autorização com o token
-    
-    // api.post('me')
-    // .then((res) => {
-    //     console.log('me: ', res);
-    //     setUser(res.data)
-    //     signin(token, user)
-    // })
-    // .catch((err) => {
-    //     console.log('error me: ', err)
-    // });
    
-
   };
   return (
     <PageLayout>
