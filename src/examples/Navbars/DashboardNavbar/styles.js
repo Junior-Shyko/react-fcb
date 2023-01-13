@@ -106,7 +106,6 @@ const navbarRow = ({ breakpoints }, { isMini }) => ({
 
 const navbarIconButton = ({ typography: { size }, breakpoints }) => ({
   px: 1,
-
   "& .material-icons, .material-icons-round": {
     fontSize: `${size.xl} !important`,
   },
@@ -118,6 +117,7 @@ const navbarIconButton = ({ typography: { size }, breakpoints }) => ({
       display: "inline-block",
       lineHeight: 1.2,
       ml: 0.5,
+      
     },
   },
 });
