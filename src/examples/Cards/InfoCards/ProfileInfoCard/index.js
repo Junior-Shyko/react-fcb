@@ -96,12 +96,7 @@ function ProfileInfoCard({ title, description, info, social, action, shadow }) {
           </Tooltip>
         </MDTypography>
       </MDBox>
-      <MDBox p={2}>
-        <MDBox mb={2} lineHeight={1}>
-          <MDTypography variant="button" color="text" fontWeight="light">
-            {description}
-          </MDTypography>
-        </MDBox>
+      <MDBox p={2}>       
         <MDBox opacity={0.3}>
           <Divider />
         </MDBox>
@@ -113,6 +108,11 @@ function ProfileInfoCard({ title, description, info, social, action, shadow }) {
             </MDTypography>
             {renderSocial}
           </MDBox>
+          <MDBox mb={2} lineHeight={1}>
+          <MDTypography variant="button" color="text" fontWeight="light">
+            {description}
+          </MDTypography>
+        </MDBox>
         </MDBox>
       </MDBox>
     </Card>
