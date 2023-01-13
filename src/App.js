@@ -33,6 +33,7 @@ import routes from "routes";
 import DetailsGroups  from "./components/FCB/Groups/details";
 import StepUserTwo from "./components/FCB/User/Step/StepUserTwo";
 import ListUser from "./components/FCB/User/ListUser";
+import Profile from "./layouts/profile"
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
@@ -195,6 +196,7 @@ export default function App() {
         <Route exact path="details-groups/:id" element={<DetailsGroups />} />
         <Route exact path="step-user-two/:id" element={<StepUserTwo />} />
         <Route exact path="todos-usuarios" element={<ListUser />} />
+        <Route exact path="perfil/:id" element={<Profile />} />
       </Routes>
     </ThemeProvider>
   );

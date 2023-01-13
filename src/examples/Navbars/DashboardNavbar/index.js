@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // react-router components
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -11,8 +11,14 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
+import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import Icon from "@mui/material/Icon";
-
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import ContentCut from '@mui/icons-material/ContentCut';
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
@@ -20,6 +26,7 @@ import MDInput from "components/MDInput";
 // Material Dashboard 2 React example components
 import Breadcrumbs from "examples/Breadcrumbs";
 import NotificationItem from "examples/Items/NotificationItem";
+
 
 // Custom styles for DashboardNavbar
 import {
@@ -44,6 +51,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Setting the navbar type
@@ -75,7 +83,12 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
-
+  const [ userAuth, setUserAuth ] = useState(JSON.parse(sessionStorage.getItem("user")))
+ console.log({userAuth})
+  const editProfile = () => {
+    navigate('../perfil/1')
+    console.log('editProfile')
+  }
   // Render the notifications menu
   const renderMenu = () => (
     <Menu
@@ -89,9 +102,22 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
-      <NotificationItem icon={<Icon>email</Icon>} title="Check new messages" />
-      <NotificationItem icon={<Icon>podcasts</Icon>} title="Manage Podcast sessions" />
-      <NotificationItem icon={<Icon>shopping_cart</Icon>} title="Payment successfully completed" />
+      <NotificationItem 
+        icon={<Icon>edit</Icon>}
+        title="Editar Perfil"
+        onClick={editProfile}
+      />
+      <Divider variant="middle"/>
+      <NotificationItem icon={<Icon>shopping_cart</Icon>} title="Deslogar" />
+      <MenuItem onClick={editProfile}>
+        <ListItemIcon>
+          <ContentCut fontSize="small" />
+        </ListItemIcon>
+        
+        <Typography variant="body2" color="text.secondary">
+          Configuração
+        </Typography>
+      </MenuItem>
     </Menu>
   );
 
@@ -124,11 +150,11 @@ function DashboardNavbar({ absolute, light, isMini }) {
               <MDInput label="Search here" />
             </MDBox> */}
             <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
+              {/* <Link to="/authentication/sign-in/basic">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
                   <Icon sx={iconsStyle}>account_circle</Icon>
                 </IconButton>
-              </Link>
+              </Link> */}
               <IconButton
                 size="small"
                 disableRipple
@@ -149,7 +175,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
               >
                 <Icon sx={iconsStyle}>settings</Icon>
               </IconButton> */}
-              {/* <IconButton
+              <IconButton
                 size="small"
                 disableRipple
                 color="inherit"
@@ -159,8 +185,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 variant="contained"
                 onClick={handleOpenMenu}
               >
-                <Icon sx={iconsStyle}>notifications</Icon>
-              </IconButton> */}
+                <Icon sx={iconsStyle}>account_circle</Icon>
+              </IconButton>
               {renderMenu()}
             </MDBox>
           </MDBox>
