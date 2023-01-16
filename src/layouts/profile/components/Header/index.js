@@ -14,7 +14,7 @@ Coded by www.creative-tim.com
 */
 
 import { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
 
@@ -25,12 +25,12 @@ import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Icon from "@mui/material/Icon";
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-
+import MDButton from "components/MDButton";
 // Material Dashboard 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
@@ -38,7 +38,8 @@ import breakpoints from "assets/theme/base/breakpoints";
 import burceMars from "assets/images/bruce-mars.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 
-function Header({ children }) {
+function Header({ children, props }) {
+  console.log({props})
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
   const [ userAuth, setUserAuth ] = useState(JSON.parse(sessionStorage.getItem("user")))
@@ -100,10 +101,10 @@ function Header({ children }) {
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
               <MDTypography variant="h5" fontWeight="medium">
-                {userAuth[0].name}
+                Você: {userAuth.name}
               </MDTypography>
               <MDTypography variant="button" color="text" fontWeight="regular">
-                {userAuth[0].nameLink}
+                {userAuth.nameLink}
               </MDTypography>
             </MDBox>
           </Grid>
@@ -134,8 +135,13 @@ function Header({ children }) {
                     </Icon>
                   }
                 />
-              </Tabs> */}
+              </Tabs> */}              
             </AppBar>
+              <Link to={'../todos-usuarios'}>
+                <MDButton variant="gradient" color="dark">
+                  <ArrowBackIcon /> Voltar
+                </MDButton>
+              </Link>
           </Grid>
         </Grid>
         {children}

@@ -85,10 +85,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
   const [ userAuth, setUserAuth ] = useState(JSON.parse(sessionStorage.getItem("user")))
- console.log({userAuth})
+
   const editProfile = () => {
-    navigate('../perfil/1')
-    console.log('editProfile')
+    navigate('../perfil/' + userAuth.id)
   }
   // Render the notifications menu
   const renderMenu = () => (
@@ -113,8 +112,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
       <MenuItem onClick={editProfile}>
         <ListItemIcon>
           <ContentCut fontSize="small" />
-        </ListItemIcon>
-        
+        </ListItemIcon>        
         <Typography variant="body2" color="text.secondary">
           Configuração
         </Typography>

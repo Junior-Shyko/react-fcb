@@ -29,7 +29,7 @@ import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
 
 function ProfilesList({ title, profiles, shadow }) {
-  const renderProfiles = profiles.map(({ image, name, description, action }) => (
+  const renderProfiles = profiles.map(({ image, name, description, description2, action }) => (
     <MDBox key={name} component="li" display="flex" alignItems="center" py={1} mb={1}>
       <MDBox mr={2}>
         <MDAvatar src={image} alt="something here" shadow="md" />
@@ -40,6 +40,9 @@ function ProfilesList({ title, profiles, shadow }) {
         </MDTypography>
         <MDTypography variant="caption" color="text">
           {description}
+        </MDTypography>
+        <MDTypography variant="caption" color="text">
+          {description2}
         </MDTypography>
       </MDBox>
       <MDBox ml="auto">
