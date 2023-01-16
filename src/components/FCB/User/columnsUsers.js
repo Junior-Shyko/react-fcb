@@ -68,7 +68,7 @@ export default function columnsusers() {
                         */}
                         <MDButton variant="gradient" color="info" size="medium" circular={true} iconOnly title="Editar Usuário">
                           {/* <Link to={`../usuario/editar/` + value} relative="path" > */}
-                          <Link to="../profile" relative="path" >
+                          <Link to={`../perfil/`+value} relative="path" >
                             <MDTypography color="white" >
                                 <ManageAccountsIcon />
                             </MDTypography>
