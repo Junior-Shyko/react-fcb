@@ -13,8 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import React, { useEffect, useState } from "react";
-import { api, getUserData, urlBase } from "../../services/Api";
-
+import { api } from "../../services/Api";
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -38,21 +37,22 @@ import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 function Dashboard() {
+  
   const { sales, tasks } = reportsLineChartData;
-  const [user, setUser] = useState("");
   const [countUser, setCountUser] = useState(0);
   const [countGroups, setCountGroups] = useState(0);
-  
+
   const getCountUsers = () => {
     api.get('user/count')
     .then((res) => {
-      console.log({res})
+      // console.log({res})
       setCountUser(res.data.message)
     })
     .catch((err) => {
       console.log({err})
     })
   }
+  
   const getCountGroups = () => {
     api.get('groups/count')
     .then((res) => {
@@ -64,14 +64,6 @@ function Dashboard() {
   }
 
   useEffect(() => {
-    getUserData()
-    .then((resp) => {
-      console.log({resp})
-      // setUser(resp.data)
-    })
-    .catch((err) => {
-      console.log({ err });
-    });
     getCountUsers();
     getCountGroups();
   }, []);

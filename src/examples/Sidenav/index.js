@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // react-router-dom components
 import { useLocation, NavLink } from "react-router-dom";
@@ -38,6 +38,7 @@ import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
 // Custom styles for the Sidenav
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
+import ModalLogout from "layouts/authentication/modal/ModalLogout";
 
 // Material Dashboard 2 React context
 import {
@@ -48,6 +49,8 @@ import {
 } from "context";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
+
+  const [ showModalLogout, setShowModalLogout] = useState();
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
@@ -140,7 +143,24 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     return returnValue;
   });
 
-  return (
+  //Logout de usuario
+  /**
+   * Envia dois parametros para o componente, um para enviar o valor de Open para chamar o modal
+   * outro parametro para receber o valor de falso do componente para alterar o estado atual
+   * da constante showModalLogout
+   */
+  const logoutUser = () => {
+    setShowModalLogout(true)
+  }
+  //recebe o valor do componente filho para alterar o estado atual da constante showModalLogout
+  function logountClick(value) {
+    if(!value) {
+      setShowModalLogout(value)
+    }else{
+      setShowModalLogout(false)
+    }
+  }
+ return (
     <SidenavRoot
       {...rest}
       variant="permanent"
@@ -179,7 +199,23 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         }
       />
       <List>{renderRoutes}</List>
-     
+      <MDBox p={2} mt="auto">
+        <MDButton
+          component="a"
+          rel="noreferrer"
+          variant="gradient"
+          color="error"
+          fullWidth
+          onClick={logoutUser}
+          title="Sair do sistema"
+        >         
+          Sair
+        </MDButton>      
+        {showModalLogout && (        
+            <ModalLogout alterShowModal={logountClick} show={showModalLogout} />
+          )
+        }        
+      </MDBox>
     </SidenavRoot>
   );
 }

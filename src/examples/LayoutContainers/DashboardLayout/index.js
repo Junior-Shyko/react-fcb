@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // react-router-dom components
 import { useLocation } from "react-router-dom";
@@ -26,8 +26,11 @@ import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React context
 import { useMaterialUIController, setLayout } from "context";
+import { urlBase } from "./../../../services/Api"
+
 
 function DashboardLayout({ children }) {
+  const [ userAuth, setUserAuth ] = useState(JSON.parse(sessionStorage.getItem("user")))
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav } = controller;
   const { pathname } = useLocation();
@@ -35,6 +38,12 @@ function DashboardLayout({ children }) {
   useEffect(() => {
     setLayout(dispatch, "dashboard");
   }, [pathname]);
+
+ useEffect(() => {
+  if(userAuth == null) {
+    window.location.href = urlBase + 'authentication/sign-in';
+  }
+ },[])
 
   return (
     <MDBox

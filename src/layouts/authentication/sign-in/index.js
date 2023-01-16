@@ -13,8 +13,8 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useState, useContext } from "react";
+import { useForm } from "react-hook-form";
 import { api } from "./../../../services/Api";
 import { useSnackbar } from 'notistack';
 
@@ -23,7 +23,6 @@ import Grid from "@mui/material/Grid";
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Grow from '@mui/material/Grow';
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -33,32 +32,37 @@ import MDButton from "components/MDButton";
 
 // Authentication layout components
 import PageLayout from "../../../examples/LayoutContainers/PageLayout";
+// Componente próprio 
+import useAuth from "hooks/useAuth";
+import StepUserTwo from "../sign-up/stepForm/step-two";
 
 function Basic() {
+  // para autenticação
+  const { signin } = useAuth();
   const [rememberMe, setRememberMe] = useState(false);
   const { handleSubmit, register } = useForm();
   const { enqueueSnackbar } = useSnackbar();
- console.log('')
+
   const onSubmit = (data) => {
-    console.log(data)
     api.post('login', data)
     .then((res) => {
-      console.log({res})
-      sessionStorage.setItem('user' , res.data.access_token)
-      window.location.href = api.urlBase + 'bashboard';
+        const response = signin(res.data.access_token)
+        if(response.auth) {
+          window.location.href = api.urlBase + 'bashboard';
+        }
     })
     .catch((err) => {
-      console.log(err)
-      enqueueSnackbar(err.response.data.message,{ 
-        autoHideDuration: 4500,
-        variant: 'error',
-        TransitionComponent: Grow,
-        anchorOrigin: {
-          horizontal: 'center',
-          vertical: 'bottom'
-        }
-      });
-    })
+        console.log('error signin: ', err.response.data.message)
+        enqueueSnackbar(err.response.data.message,{ 
+          autoHideDuration: 2000,
+          variant: 'error',
+          anchorOrigin: {
+            horizontal: 'center',
+            vertical: 'bottom'
+          }
+        });
+    });
+   
   };
   return (
     <PageLayout>

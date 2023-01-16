@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
@@ -38,11 +37,14 @@ import Profile from "./layouts/profile"
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
+
+
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
 export default function App() {
+
   const [controller, dispatch] = useMaterialUIController();
   const {
     miniSidenav,
@@ -97,18 +99,6 @@ export default function App() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
-
-  const scrollInto = useRef(null)
-  useEffect(() => {
-    // scrollInto.current.scrollIntoView()
-    window.addEventListener("load", function () {
-      // Set a timeout...
-      setTimeout(function () {
-          // Hide the address bar!
-          window.scrollTo(0, 1);
-      }, 0);
-  });
-  })
   
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {

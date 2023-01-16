@@ -12,7 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
+import { useState } from "react";
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
@@ -52,6 +52,8 @@ import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 
 function Overview() {
+  const [ userAuth, setUserAuth ] = useState(JSON.parse(sessionStorage.getItem("user")))
+  console.log({userAuth})
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -65,13 +67,14 @@ function Overview() {
             <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <ProfileInfoCard
-                title="profile information"
+                title="Detalhes"
                 description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
                 info={{
-                  fullName: "Alec M. Thompson",
-                  mobile: "(44) 123 1234 123",
-                  email: "alecthompson@mail.com",
-                  location: "USA",
+                  name: userAuth[0].name,
+                  telefone: userAuth[0].phone,
+                  email: userAuth[0].email,
+                  cidade: userAuth[0].city,
+                  id: userAuth[0].id,
                 }}
                 social={[
                   {
@@ -91,12 +94,12 @@ function Overview() {
                   },
                 ]}
                 action={{ route: "", tooltip: "Edit Profile" }}
-                shadow={false}
+                shadow={true}
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />
             </Grid>
             <Grid item xs={12} xl={4}>
-              <ProfilesList title="conversations" profiles={profilesListData} shadow={false} />
+              <ProfilesList title="Grupos" profiles={profilesListData} shadow={false} />
             </Grid>
           </Grid>
         </MDBox>

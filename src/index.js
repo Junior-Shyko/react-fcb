@@ -21,12 +21,15 @@ import App from "App";
 
 // Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
+import { AuthProvider } from "Contexts/auth";
 
 ReactDOM.render(
   <BrowserRouter>
     <MaterialUIControllerProvider>
       <SnackbarProvider maxSnack={3}>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </SnackbarProvider>
     </MaterialUIControllerProvider>
   </BrowserRouter>,
