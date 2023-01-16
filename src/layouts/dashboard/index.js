@@ -41,6 +41,7 @@ function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const [countUser, setCountUser] = useState(0);
   const [countGroups, setCountGroups] = useState(0);
+  const [ countBirthDay, setCountBirthDay] = useState(0)
 
   const getCountUsers = () => {
     api.get('user/count')
@@ -63,7 +64,23 @@ function Dashboard() {
     })
   }
 
+  //aniversariante do mes
+  const getBirthDay = () => {
+   
+    api.get('user/birth')
+    .then((res) => {
+      console.log('getBirthDay',res.data.length)
+      setCountBirthDay(res.data.length)
+    })
+    .catch((err) => {
+      console.log({err})
+    })
+  }
+
   useEffect(() => {
+    let token =  sessionStorage.getItem('token');
+    api.defaults.headers.authorization = `Bearer ${token}`;
+    getBirthDay();
     getCountUsers();
     getCountGroups();
   }, []);
@@ -110,7 +127,7 @@ function Dashboard() {
                 color="success"
                 icon="cake"
                 title="Níver do mês"
-                count="3"
+                count={countBirthDay}
                 percentage={{
                   // color: "success",
                   // amount: "+1%",
@@ -125,12 +142,12 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="primary"
                 icon="person_add"
-                title="Followers"
-                count="+91"
+                title="Reuniões"
+                count="91"
                 percentage={{
                   color: "success",
                   amount: "",
-                  label: "Just updated",
+                  label: "Reuniões do Mês",
                   link: "user/all"
                 }}
               />
