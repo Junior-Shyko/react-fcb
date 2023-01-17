@@ -6,12 +6,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import MDButton from "components/MDButton";
-import useAuth from "./../../../hooks/useAuth";
+// import useAuth from "./../../../hooks/useAuth";
 
 export default function ModalLogout(props) {
     console.log(props)
   const [open, setOpen] = React.useState();
-  const { signout } = useAuth();
+  // const { signout } = useAuth();
   console.log({open})
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,7 +24,7 @@ export default function ModalLogout(props) {
   };
 
   const logout = () => {
-    signout();
+    // signout();
   }
   React.useEffect(() => {
     setOpen(props.show)

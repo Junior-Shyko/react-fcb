@@ -35,35 +35,46 @@ import PageLayout from "../../../examples/LayoutContainers/PageLayout";
 // Componente próprio 
 import useAuth from "hooks/useAuth";
 import StepUserTwo from "../sign-up/stepForm/step-two";
+// import { signIn } from "../../../context/AuthContext";
+import { AuthContext } from "./../../../context/AuthContext";
 
 function Basic() {
   // para autenticação
-  const { signin } = useAuth();
+  // const { signin } = useAuth();
   const [rememberMe, setRememberMe] = useState(false);
   const { handleSubmit, register } = useForm();
   const { enqueueSnackbar } = useSnackbar();
+  const { signIn, signed } = useContext(AuthContext);
 
-  const onSubmit = (data) => {
-    api.post('login', data)
-    .then((res) => {
-        const response = signin(res.data.access_token)
-        if(response.auth) {
-          window.location.href = api.urlBase + 'bashboard';
-        }
-    })
-    .catch((err) => {
-        console.log('error signin: ', err.response.data.message)
-        enqueueSnackbar(err.response.data.message,{ 
-          autoHideDuration: 2000,
-          variant: 'error',
-          anchorOrigin: {
-            horizontal: 'center',
-            vertical: 'bottom'
-          }
-        });
-    });
+  const onSubmit =  async (data) => {
+
+    await signIn(data)
+
+
+    // api.post('login', data)
+    // .then((res) => {
+    //     const response = signin(res.data.access_token)
+    //     if(response.auth) {
+    //       window.location.href = api.urlBase + 'bashboard';
+    //     }
+    // })
+    // .catch((err) => {
+    //     console.log('error signin: ', err.response.data.message)
+    //     enqueueSnackbar(err.response.data.message,{ 
+    //       autoHideDuration: 2000,
+    //       variant: 'error',
+    //       anchorOrigin: {
+    //         horizontal: 'center',
+    //         vertical: 'bottom'
+    //       }
+    //     });
+    // });
    
   };
+
+  if (!signed) {
+    console.log('deslogado');
+  }
   return (
     <PageLayout>
       <MDBox  sx={{

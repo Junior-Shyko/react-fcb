@@ -35,21 +35,21 @@ useEffect(() => {
     // // const [token, setToken] = useState();
    
     api.defaults.headers.authorization = `Bearer ${token}`;
-    api.post('me')
-    .then((res) => {
-        console.log('me: ', res);
-        const usersStorage = JSON.stringify(res.data);
-        console.log(usersStorage)
-        sessionStorage.setItem('token' , token)
-        sessionStorage.setItem('user' , usersStorage)
-        // localStorage.setItem("token", token);
-        // localStorage.setItem("user", usersStorage);
-        setUser(res.data)
+    // api.post('me')
+    // .then((res) => {
+    //     console.log('me: ', res);
+    //     const usersStorage = JSON.stringify(res.data);
+    //     console.log(usersStorage)
+    //     sessionStorage.setItem('token' , token)
+    //     sessionStorage.setItem('user' , usersStorage)
+    //     // localStorage.setItem("token", token);
+    //     // localStorage.setItem("user", usersStorage);
+    //     setUser(res.data)
        
-    })
-    .catch((err) => {
-        console.log('error me: ', err)
-    });
+    // })
+    // .catch((err) => {
+    //     console.log('error me: ', err)
+    // });
     return {auth: true};
     // 
 

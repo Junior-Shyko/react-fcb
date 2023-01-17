@@ -12,7 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { api } from "../../services/Api";
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -35,9 +35,11 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+import { AuthContext } from "./../../context/AuthContext";
 
 function Dashboard() {
-  
+
+  const { user } = useContext(AuthContext);
   const { sales, tasks } = reportsLineChartData;
   const [countUser, setCountUser] = useState(0);
   const [countGroups, setCountGroups] = useState(0);
@@ -64,6 +66,7 @@ function Dashboard() {
   }
 
   useEffect(() => {
+    console.log({user})
     getCountUsers();
     getCountGroups();
   }, []);

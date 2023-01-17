@@ -13,11 +13,11 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
 // react-router-dom components
 import { useLocation } from "react-router-dom";
-
+import { useNavigate  } from "react-router-dom";
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
 
@@ -26,22 +26,23 @@ import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React context
 import { useMaterialUIController, setLayout } from "context";
-import { urlBase } from "./../../../services/Api"
-
+import { AuthContext } from "./../../../context/AuthContext";
 
 function DashboardLayout({ children }) {
-  const [ userAuth, setUserAuth ] = useState(JSON.parse(sessionStorage.getItem("user")))
+  const { signed } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav } = controller;
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLayout(dispatch, "dashboard");
   }, [pathname]);
 
  useEffect(() => {
-  if(userAuth == null) {
-    window.location.href = urlBase + 'authentication/sign-in';
+  if(!user && !signed) {
+    navigate('../authentication/sign-in')
   }
  },[])
 
@@ -50,7 +51,6 @@ function DashboardLayout({ children }) {
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
         p: 3,
         position: "relative",
-
         [breakpoints.up("xl")]: {
           marginLeft: miniSidenav ? pxToRem(120) : pxToRem(274),
           transition: transitions.create(["margin-left", "margin-right"], {
